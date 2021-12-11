@@ -1,6 +1,13 @@
 import React, { Fragment, useState, useEffect } from "react";
 // import reactDom from "react-dom";
 import ReactDOM from "react-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Routes,
+  HashRouter,
+} from "react-router-dom";
 import "./App.css";
 import HeatMap from "./components/HeatMap/heatmap";
 import MyCircleMarker from "./components/cirleMarker/circleMarker";
@@ -28,7 +35,7 @@ import {
 } from "./api/Ineo4j.js";
 
 //antd 组件库
-import { Button, Switch, Divider, message, Card, Image, Tabs } from "antd";
+import { Button, Divider, message, Card, Image, Tabs } from "antd";
 import { Input, Space } from "antd";
 import { Layout, Menu, Breadcrumb } from "antd";
 import {
@@ -429,7 +436,13 @@ function MyHeatMap() {
 }
 
 ReactDOM.render(
-  <SiderLayout />,
-  // <Playground />,
+  <Router>
+    <Link to="index">to index</Link>
+    <Link to="landpage">to landpage</Link>
+    <Routes>
+      <Route path="/index" element={<Playground />} />
+      <Route path="/landpage" element={<SiderLayout />} />
+    </Routes>
+  </Router>,
   document.querySelector("#root")
 );
