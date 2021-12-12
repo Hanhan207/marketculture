@@ -34,12 +34,11 @@ function getCenter(input) {
     });
 }
 
-//获取关系数据
-function getRelation(input) {
+//获取人和老字号关系数据
+function getManLhb(input) {
   // console.log("Ineo4jInput", input);
   var session = driver.session();
   var myData = [];
-  //
   return session
     .run("MATCH (m:man)-[r:去过]->(t:thb) RETURN m, r, t", {})
     .then((result) => {
@@ -51,6 +50,37 @@ function getRelation(input) {
           start: record.get("m"),
           real: record.get("r"),
           end: record.get("t"),
+        };
+        myData.push(node);
+        // console.log("myData", myData);
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+    .then(() => {
+      session.close();
+      console.log("mydata", myData);
+      return myData;
+    });
+}
+
+//获取人和胡同关系数据
+function getManHt(input) {
+  // console.log("Ineo4jInput", input);
+  var session = driver.session();
+  var myData = [];
+  return session
+    .run("MATCH (m:man)-[r:去过]->(h:hb) RETURN m, r, h", {})
+    .then((result) => {
+      // console.log("result", result);
+      // console.log("result.record", result.records[0].get(1));
+      result.records.forEach((record) => {
+        // console.log("eachRecord", record);
+        let node = {
+          start: record.get("m"),
+          real: record.get("r"),
+          end: record.get("h"),
         };
         myData.push(node);
         // console.log("myData", myData);
@@ -201,4 +231,4 @@ function quchong(arr) {
   // return r;
 }
 
-export { getCenter, getSpace, getRelation, getHeat, getHeatAll, getPerson };
+export { getCenter, getSpace, getManLhb, getHeat, getHeatAll, getPerson };

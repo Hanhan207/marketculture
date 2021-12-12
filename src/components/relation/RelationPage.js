@@ -3,12 +3,12 @@ import React, { useEffect, useState } from "react";
 import { Button, Switch, Divider, message, Card, Image, Tabs } from "antd";
 
 import {
-  getRelation as IgetRelation,
+  getManLhb as IgetRelation,
   getPerson as IgetPerson,
 } from "../../api/Ineo4j";
 
-import LinkMap from "../linkMap/Linkmap";
-import Arcmap from "../linkMap/Arcmap";
+import LinkMap from "./Linkmap";
+import Arcmap from "./Arcmap";
 
 const { TabPane } = Tabs;
 

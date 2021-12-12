@@ -1,13 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
 // import reactDom from "react-dom";
 import ReactDOM from "react-dom";
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Routes,
-  HashRouter,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 import "./App.css";
 import HeatMap from "./components/HeatMap/heatmap";
 import MyCircleMarker from "./components/cirleMarker/circleMarker";
@@ -86,7 +80,12 @@ function SiderLayout() {
           {collapsed ? (
             <Image width={30} src={logo} style={{ marginLeft: 18 }} />
           ) : (
-            <Image width={180} src={topLogo} />
+            <Link
+              to="home"
+              style={{ width: "180", textAlign: "center", fontSize: "16px" }}
+            >
+              市井文化可视分析系统
+            </Link>
           )}
         </div>
 
@@ -437,11 +436,11 @@ function MyHeatMap() {
 
 ReactDOM.render(
   <Router>
-    <Link to="index">to index</Link>
-    <Link to="landpage">to landpage</Link>
+    {/* <Link to="index">to index</Link>
+    <Link to="landpage">to landpage</Link> */}
     <Routes>
-      <Route path="/index" element={<Playground />} />
-      <Route path="/landpage" element={<SiderLayout />} />
+      <Route path="/home" element={<Playground />} />
+      <Route path="/" element={<SiderLayout />} />
     </Routes>
   </Router>,
   document.querySelector("#root")
