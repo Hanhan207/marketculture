@@ -9,6 +9,77 @@ import {
   getManHt as IgetManHt,
 } from "../../api/Ineo4j";
 
+const personlocation = [
+  {
+      "person": "茅盾",
+      "location": [116.31,39.97]
+  },
+  {
+      "person": "沈从文",
+      "location": [116.31,39.93]
+  },
+  {
+      "person": "郁达夫",
+      "location": [116.31,39.89]
+  },
+  {
+      "person": "巴金",
+      "location": [116.31,39.85]
+  },
+  {
+      "person": "郭沫若",
+      "location": [116.36,39.97]
+  },
+  {
+      "person": "老舍",
+      "location": [116.36,39.93]
+  },
+  {
+      "person": "胡适",
+      "location": [116.36,39.89]
+  },
+  {
+      "person": "鲁迅",
+      "location": [116.36,39.85]
+  },
+  {
+      "person": "梁实秋",
+      "location": [116.41,39.97]
+  },
+  {
+      "person": "胡絜青",
+      "location":[116.41,39.93]
+  },
+  {
+      "person": "启功",
+      "location": [116.41,39.89]
+  },
+  {
+      "person": "梅兰芳",
+      "location": [116.41,39.85]
+  },
+  {
+      "person": "齐白石",
+      "location": [116.46,39.97]
+  },
+  {
+      "person": "蒲杰",
+      "location": [116.46,39.93]
+  },
+  {
+      "person": "张大千",
+      "location": [116.46,39.89]
+  },
+  {
+      "person": "马连良",
+      "location": [116.46,39.85]
+  },
+  {
+      "person": "尚小云",
+      "location": [116.46,39.81]
+  }
+]
+
 function LinkMap(Idata) {
   const [thbdata, setthbdata] = useState([]);
   const [mymap, setmap] = useState();
@@ -38,7 +109,7 @@ function LinkMap(Idata) {
         zoom: 12,
         viewMode: "3D", // 地图设置成 3D 模式，否则图层会失去高度信息
         scrollWheel: true,
-        mapStyle: "amap://styles/831ba866573db55fa614ca598e94cc4b",
+        mapStyle: "amap://styles/2c24c72703450fe5ca6b35b188ec69c1",
       });
 
       map.addControl(
@@ -65,7 +136,7 @@ function LinkMap(Idata) {
           let Mlat = Idata.data[i].end.properties.lat * 1;
 
           object3Dlayer.add(
-            drawLines(getcenter(name), Mlng, Mlat, 100000, getcolor(type))
+            drawLines(getcenter(name), Mlng, Mlat, 50000, getcolor(type))
           );
         }
       }
@@ -83,18 +154,10 @@ function LinkMap(Idata) {
       }
       //计算中心点
       function getcenter(name) {
-        let center = [116.397428, 39.90923];
-        switch (name) {
-          case "鲁迅":
-            center = [116.322462, 39.895467];
-            break;
-          case "胡适":
-            center = [116.395247, 39.993383];
-            break;
-          default:
-            center = [116.397428, 39.90923];
-        }
-        return center;
+        let obj = personlocation.find(o=>o.person === name)
+        console.log('obj',obj)
+        
+        return obj.location;
       }
       //计算颜色
       function getcolor(type) {

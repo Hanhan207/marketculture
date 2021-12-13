@@ -89,7 +89,7 @@ function SiderLayout() {
           )}
         </div>
 
-        <Menu theme="light" defaultSelectedKeys={["0"]} mode="inline">
+        <Menu theme="light" defaultSelectedKeys={["1"]} mode="inline">
           <Menu.Item
             key="1"
             icon={<PieChartOutlined />}
