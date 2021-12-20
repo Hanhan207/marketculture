@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Button, Switch, Divider, message, Card, Image, Tabs } from "antd";
 
-import AMapLoader from "@amap/amap-jsapi-loader";
+// const AMap = window.AMap;
+import man from '../../api/mandata'
 import { Amap } from "@amap/amap-react";
+import AMapLoader from "@amap/amap-jsapi-loader";
 
 import {
   getManLhb as IgetManLhb,
@@ -98,12 +100,15 @@ function LinkMap(Idata) {
     });
   }
 
+  
+
   AMapLoader.load({
     key: "6362a535992f9fd43430a7027fa33db2", // 申请好的Web端开发者Key，首次调用 load 时必填
     version: "1.4.15", // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
     plugins: ["AMap.ControlBar"],
   })
     .then((AMap) => {
+      
       var map = new AMap.Map("map", {
         center: [116.397428, 39.90923],
         zoom: 12,
@@ -122,6 +127,7 @@ function LinkMap(Idata) {
           },
         })
       );
+      
       var object3Dlayer = new AMap.Object3DLayer();
       map.add(object3Dlayer);
 

@@ -96,6 +96,31 @@ function getManHt(input) {
     });
 }
 
+//获取人和地点关系
+function getManPlace(man, place) {
+  var session = driver.session();
+  var myData = [];
+  return session
+    .run(`MATCH (m:man{name:"${man}"})-[r]->(p:${place}) RETURN m, r, p`, {})
+    .then((result) => {
+      result.records.forEach((record) => {
+        let node = {
+          start: record.get("m"),
+          real: record.get("r"),
+          end: record.get("p"),
+        };
+        myData.push(node);
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+    .then(() => {
+      session.close();
+      return myData;
+    });
+}
+
 //获取地图空间数据
 function getSpace(input) {
   var session = driver.session();
@@ -231,4 +256,12 @@ function quchong(arr) {
   // return r;
 }
 
-export { getCenter, getSpace, getManLhb, getHeat, getHeatAll, getPerson };
+export {
+  getCenter,
+  getSpace,
+  getManLhb,
+  getHeat,
+  getHeatAll,
+  getPerson,
+  getManPlace,
+};
