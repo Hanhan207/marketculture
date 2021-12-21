@@ -15,6 +15,270 @@ import man from "../../api/mandata";
 
 import { getManPlace as IgetManPlace } from "../../api/Ineo4j";
 
+var LabelsData = [
+  {
+      name: '全聚德烤鸭',
+      position: [116.467456, 39.994996],
+      zooms: [10, 20],
+      opacity: 1,
+      zIndex: 10,
+      icon: {
+          type: 'image',
+          image: 'https://a.amap.com/jsapi_demos/static/images/poi-marker.png',
+          clipOrigin: [14, 92],
+          clipSize: [50, 68],
+          size: [25, 34],
+          anchor: 'bottom-center',
+          angel: 0,
+          retina: true
+      },
+      text: {
+          content: '全聚德烤鸭',
+          direction: 'left',
+          offset: [0, -5],
+          style: {
+              fontSize: 15,
+              fontWeight: 'normal',
+              fillColor: '#333',
+              strokeColor: '#fff',
+              strokeWidth: 2,
+          }
+      }
+  },
+  {
+      name: '绥兴盛',
+      position: [116.469412, 39.996412],
+      zooms: [10, 20],
+      opacity: 1,
+      zIndex: 16,
+      icon: {
+          type: 'image',
+          image: 'https://a.amap.com/jsapi_demos/static/images/poi-marker.png',
+          clipOrigin: [101, 92],
+          clipSize: [50, 68],
+          size: [25, 34],
+          anchor: 'bottom-center',
+          angel: 0,
+          retina: true
+      },
+      text: {
+          content: '绥兴盛',
+          direction: 'top',
+          offset: [0, 0],
+          style: {
+              fontSize: 15,
+              fontWeight: 'normal',
+              fillColor: '#333',
+              strokeColor: '#fff',
+              strokeWidth: 2,
+          }
+      }
+  },
+  {
+      name: '香河肉饼',
+      position: [116.471871, 39.995616],
+      zooms: [10, 20],
+      opacity: 1,
+      zIndex: 8,
+      icon: {
+          type: 'image',
+          image: 'https://a.amap.com/jsapi_demos/static/images/poi-marker.png',
+          clipOrigin: [194, 92],
+          clipSize: [50, 68],
+          size: [25, 34],
+          anchor: 'bottom-center',
+          angel: 0,
+          retina: true
+      },
+      text: {
+          content: '香河肉饼',
+          direction: 'right',
+          offset: [0, -5],
+          style: {
+              fontSize: 15,
+              fontWeight: 'normal',
+              fillColor: '#333',
+              strokeColor: '#fff',
+              strokeWidth: 2,
+          }
+      }
+  },
+  {
+      name: '金鼎轩',
+      position: [116.468098, 39.993729],
+      zooms: [10, 20],
+      opacity: 1,
+      zIndex: 23,
+      icon: {
+          type: 'image',
+          image: 'https://a.amap.com/jsapi_demos/static/images/poi-marker.png',
+          clipOrigin: [283, 92],
+          clipSize: [50, 68],
+          size: [25, 34],
+          anchor: 'bottom-center',
+          angel: 0,
+          retina: true
+      },
+      text: {
+          content: '金鼎轩',
+          direction: 'bottom',
+          offset: [0, 0],
+          style: {
+              fontSize: 15,
+              fontWeight: 'normal',
+              fillColor: '#333',
+              strokeColor: '#fff',
+              strokeWidth: 2,
+          }
+      }
+  },
+  {
+      name: '湘西土菜',
+      position: [116.464471, 39.996690],
+      zooms: [10, 20],
+      opacity: 1,
+      zIndex: 6,
+      icon: {
+          type: 'image',
+          image: 'https://a.amap.com/jsapi_demos/static/images/poi-marker.png',
+          clipOrigin: [370, 92],
+          clipSize: [50, 68],
+          size: [25, 34],
+          anchor: 'bottom-center',
+          angel: 0,
+          retina: true
+      },
+      text: {
+          content: '湘西土菜',
+          direction: 'left',
+          offset: [-3, -7],
+          style: {
+              fontSize: 13,
+              fontWeight: 'normal',
+              fillColor: '#fff',
+              padding: '2, 5',
+              backgroundColor: '#b1009b'
+          }
+      }
+  },
+  {
+      name: '香猪坊',
+      position: [116.468599, 39.995847],
+      zooms: [10, 20],
+      opacity: 1,
+      zIndex: 5,
+      icon: {
+          type: 'image',
+          image: 'https://a.amap.com/jsapi_demos/static/images/poi-marker.png',
+          clipOrigin: [459, 92],
+          clipSize: [50, 68],
+          size: [25, 34],
+          anchor: 'bottom-center',
+          angel: 0,
+          retina: true
+      },
+      text: {
+          content: '香猪坊',
+          direction: 'top',
+          offset: [0, 0],
+          style: {
+              fontSize: 15,
+              fontWeight: 'normal',
+              fillColor: '#333',
+              strokeColor: '#fff',
+              strokeWidth: 2,
+          }
+      }
+  },
+  {
+      name: '京味斋烤鸭店',
+      position: [116.462483, 39.992492],
+      zooms: [10, 20],
+      opacity: 1,
+      zIndex: 4,
+      icon: {
+          type: 'image',
+          image: 'https://a.amap.com/jsapi_demos/static/images/poi-marker.png',
+          clipOrigin: [547, 92],
+          clipSize: [50, 68],
+          size: [25, 34],
+          anchor: 'bottom-center',
+          angel: 0,
+          retina: true
+      },
+      text: {
+          content: '京味斋烤鸭店',
+          direction: 'top',
+          offset: [0, 0],
+          style: {
+              fontSize: 13,
+              fontWeight: 'normal',
+              fillColor: '#fff',
+              padding: '2, 5',
+              backgroundColor: '#22884f'
+          }
+      }
+  },
+  {
+      name: '脊骨土豆汤',
+      position: [116.465586, 39.996780],
+      zooms: [10, 20],
+      opacity: 1,
+      zIndex: 3,
+      icon: {
+          type: 'image',
+          image: 'https://a.amap.com/jsapi_demos/static/images/poi-marker.png',
+          clipOrigin: [635, 92],
+          clipSize: [50, 68],
+          size: [25, 34],
+          anchor: 'bottom-center',
+          angel: 0,
+          retina: true
+      },
+      text: {
+          content: '脊骨土豆汤',
+          direction: 'top',
+          offset: [0, 0],
+          style: {
+              fontSize: 15,
+              fontWeight: 'normal',
+              fillColor: '#333',
+              strokeColor: '#fff',
+              strokeWidth: 2,
+          }
+      }
+  },
+  {
+      name: '山西刀削面',
+      position: [116.472881, 39.997064],
+      zooms: [10, 20],
+      zIndex: 2,
+      opacity: 1,
+      icon: {
+          type: 'image',
+          image: 'https://a.amap.com/jsapi_demos/static/images/poi-marker.png',
+          clipOrigin: [723, 92],
+          clipSize: [50, 68],
+          size: [25, 34],
+          anchor: 'bottom-center',
+          angel: 0,
+          retina: true
+      },
+      text: {
+          content: '山西刀削面',
+          direction: 'top',
+          offset: [0, 0],
+          style: {
+              fontSize: 13,
+              fontWeight: 'normal',
+              fillColor: '#fff',
+              padding: '2, 5',
+              backgroundColor: '#b1009b'
+          }
+      }
+  }
+];
+
 const AMap = window.AMap;
 const { Option } = Select;
 
@@ -23,6 +287,8 @@ function LinkMap(Idata) {
   const [person, setPerson] = useState("鲁迅");
   const refmap = useRef(null);
   const [mylayer, setLayer] = useState(null);
+  const [markers, setmarkers] = useState([])
+  const [markLayer, setmarkLayer] = useState(null)
 
   useEffect(() => {
     const map = new AMap.Map("mapBox", {
@@ -53,50 +319,39 @@ function LinkMap(Idata) {
         })
       );
     });
+    var markerLayer = new AMap.LabelsLayer({
+      zooms: [3, 20],
+      zIndex: 1000,
+      // 开启标注避让，默认为开启，v1.4.15 新增属性
+      collision: true,
+      // 开启标注淡入动画，默认为开启，v1.4.15 新增属性
+      animation: true,
+  });
+  setmarkLayer(markerLayer)
+  
     setLayer(new AMap.Object3DLayer());
     setMap(map);
-    //添加物体
-    // 以不规则棱柱体 Prism 为例，添加至 3DObjectLayer 图层中
-    var paths = [
-      [116.395951, 39.907129],
-      [116.399127, 39.907178],
-      [116.399534, 39.900413],
-      [116.396316, 39.900331],
-    ];
-
-    var bounds = paths.map(function (path) {
-      return new AMap.LngLat(path[0], path[1]);
-    });
-
-    // 创建 Object3D 对象
-    var prism = new AMap.Object3D.Prism({
-      path: bounds,
-      height: 500,
-      color: "rgba(100, 150, 230, 0.7)", // 支持 #RRGGBB、rgb()、rgba() 格式数据
-    });
-
-    // 开启透明度支持
-    prism.transparent = true;
-    var layer1 = new AMap.Object3DLayer();
-    map.add(layer1);
-    // 添加至 3D 图层
-    layer1.add(prism);
-    //悬浮
-    map.on("mousemove", function (ev) {
-      var pixel = ev.pixel;
-      var px = new AMap.Pixel(pixel.x, pixel.y);
-      var obj = map.getObject3DByContainerPos(px, [layer1], true) || {};
-
-      // 选中的 face 所在的索引
-      var index = obj.index;
-      // 选中的 object3D 对象，这里为当前 Mesh
-      var object = obj.object;
-      // 被拾取到的对象和拾取射线的交叉点的3D坐标
-      var point = obj.point;
-      // 交叉点距透视原点的距离
-      var distance = obj.distance;
-    });
+    
   }, []);
+
+  //设置标记
+  function setMarker(data){
+    for(var i=0;i<data.length;i++){
+      var curData = data[i]
+      var labelMarker = new AMap.LabelMarker(curData)
+      markers.push(labelMarker)
+      markLayer.add(labelMarker)
+    }
+    mymap.add(markLayer)
+  }
+
+  //地标数据转Label
+  function toLabel(data){
+    return {
+      name:data.properties.name,
+      position:[data.properties.lat,data.properties.lng]
+    }
+  }
 
   //选人
   function handleChange(value) {
@@ -224,6 +479,7 @@ function LinkMap(Idata) {
           </Option>
         ))}
       </Select>
+      <button onClick={()=>setMarker(LabelsData)}>set</button>
       <div id="mapBox" ref={refmap}></div>
     </div>
   );
