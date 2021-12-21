@@ -10,7 +10,6 @@ var driver = neo4j.driver(
 
 //获取单个点
 function getCenter(input) {
-  console.log("Ineo4jInput", input);
   var session = driver.session();
   var myData = [];
   //MATCH (m:man)-[r:去过]->(t:thb) RETURN m, r, t
@@ -19,15 +18,11 @@ function getCenter(input) {
       nameParam: input,
     })
     .then((result) => {
-      console.log("result", result);
-      console.log("result.record", result.records[0].get(0));
       result.records.forEach((record) => {
         myData = record.get("n");
       });
     })
-    .catch((error) => {
-      console.log(error);
-    })
+    .catch((error) => {})
     .then(() => {
       session.close();
       return myData;
@@ -36,54 +31,42 @@ function getCenter(input) {
 
 //获取人和老字号关系数据
 function getManLhb(input) {
-  // console.log("Ineo4jInput", input);
   var session = driver.session();
   var myData = [];
   return session
     .run("MATCH (m:man)-[r:去过]->(t:thb) RETURN m, r, t", {})
     .then((result) => {
-      // console.log("result", result);
-      // console.log("result.record", result.records[0].get(1));
       result.records.forEach((record) => {
-        // console.log("eachRecord", record);
         let node = {
           start: record.get("m"),
           real: record.get("r"),
           end: record.get("t"),
         };
         myData.push(node);
-        // console.log("myData", myData);
       });
     })
-    .catch((error) => {
-      console.log(error);
-    })
+    .catch((error) => {})
     .then(() => {
       session.close();
-      console.log("mydata", myData);
+
       return myData;
     });
 }
 
 //获取人和胡同关系数据
 function getManHt(input) {
-  // console.log("Ineo4jInput", input);
   var session = driver.session();
   var myData = [];
   return session
     .run("MATCH (m:man)-[r:去过]->(h:hb) RETURN m, r, h", {})
     .then((result) => {
-      // console.log("result", result);
-      // console.log("result.record", result.records[0].get(1));
       result.records.forEach((record) => {
-        // console.log("eachRecord", record);
         let node = {
           start: record.get("m"),
           real: record.get("r"),
           end: record.get("h"),
         };
         myData.push(node);
-        // console.log("myData", myData);
       });
     })
     .catch((error) => {
@@ -91,7 +74,6 @@ function getManHt(input) {
     })
     .then(() => {
       session.close();
-      console.log("mydata", myData);
       return myData;
     });
 }
@@ -128,16 +110,11 @@ function getSpace(input) {
   return session
     .run(`match (n:${input}) return n`)
     .then((result) => {
-      console.log("result", result);
       result.records.forEach((record) => {
-        // console.log("recordN", record.get("n"));
-        // console.log("myData", myData);
         myData.push(record.get("n").properties);
       });
     })
-    .catch((error) => {
-      console.log(error);
-    })
+    .catch((error) => {})
     .then(() => {
       session.close();
       return myData;
@@ -151,12 +128,11 @@ function getHeat(input) {
   return session
     .run(`match(n:${input}) return n`)
     .then((result) => {
-      console.log("result", result);
       result.records.forEach((record) => {
         let count = {
-          lng: record.get("n").properties.long,
-          lat: record.get("n").properties.lat,
-          count: record.get("n").properties.value,
+          lng: record.get("n").properties.long * 1,
+          lat: record.get("n").properties.lat * 1,
+          count: record.get("n").properties.value * 1,
         };
         myData.push(count);
       });
@@ -180,7 +156,6 @@ function getHeatAll() {
      return n1,n2`
     )
     .then((result) => {
-      console.log("resultAll", result);
       result.records.forEach((record) => {
         let count = {
           lng: record.get("n1").properties.long,
@@ -201,19 +176,14 @@ function getHeatAll() {
 
 //获取人物关系
 function getPerson() {
-  // console.log("Ineo4jInput", input);
   var session = driver.session();
   var nodes = [];
   var edges = [];
 
-  //
   return session
     .run("MATCH (m:man)-[r:相关]->(n:man) RETURN m, r, n")
     .then((result) => {
-      // console.log("result", result);
-      // console.log("result.record", result.records[0].get(1));
       result.records.forEach((record) => {
-        // console.log("eachRecord", record);
         edges.push({
           source: record.get("r").start.low + "",
           target: record.get("r").end.low + "",
@@ -221,8 +191,6 @@ function getPerson() {
         });
         nodes.push(record.get("m"));
         nodes.push(record.get("n"));
-
-        // console.log("myData", myData);
       });
     })
     .catch((error) => {
@@ -230,10 +198,7 @@ function getPerson() {
     })
     .then(() => {
       session.close();
-      console.log("Nodes", nodes);
       let myData = { nodes: quchong(nodes), edges: edges };
-
-      console.log("QC", quchong(nodes));
       return myData;
     });
 }
@@ -241,19 +206,9 @@ function getPerson() {
 //去重数据
 function quchong(arr) {
   const res = new Map();
-  // return arr.filter((a) => !res.has(a.id) && res.set(a.id, 1));
   return arr.filter(
     (a) => !res.has(a.identity.low) && res.set(a.identity.low, 1)
   );
-
-  // const age = "id";
-  // const r = arr.reduce(
-  //   (all, next) =>
-  //     all.some((atom) => atom[age] === next[age]) ? all : [...all, next],
-  //   []
-  // );
-  // // console.log(r);
-  // return r;
 }
 
 export {

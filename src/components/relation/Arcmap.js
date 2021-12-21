@@ -21,11 +21,9 @@ const colors = [
 const lineDash = [4, 2, 1, 2];
 
 function Arcmap(e) {
-  console.log("starte", e);
   useEffect(() => {
-    console.log("e", e);
     init(e.data);
-  });
+  },[]);
 
   return <div style={{ width: width, height: height }} id="container"></div>;
 }
@@ -161,7 +159,6 @@ function init(e) {
       },
     };
   });
-  console.log("nodeMap", nodeMap);
   //设置边
   edges.forEach((edge) => {
     edge.type = "line-growth";
@@ -177,8 +174,6 @@ function init(e) {
     // edge.targetName = target.name;
     // console.log("edge", edge);
   });
-
-  console.log("Laste", e);
   graph.data(e);
   graph.render();
 }

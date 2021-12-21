@@ -1,17 +1,48 @@
-import AMapLoader from '@amap/amap-jsapi-loader'
 
-const initMAp = async(config) =>{
-    return new Promise((resolve,reject)=>{
-        AMapLoader.load({
-            key: "6362a535992f9fd43430a7027fa33db2", // 申请好的Web端开发者Key，首次调用 load 时必填
-            version: "1.4.15", // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
-            plugins: ["AMap.ControlBar"],
-          }).then((AMap)=>{
-              resolve(AMap)
-          }).catch(err =>{
-              reject(err)
-          })
-    })
+const AMap = window.AMap;
+
+const initMap = {
+    zoom:12,
+    center: [116.397428, 39.90923], //中心点坐标
+    pitch: 50,
+    resizeEnable: true,
+    rotateEnable: true,
+    pitchEnable: true,
+    viewMode: "3D", //开启3D视图,默认为关闭
+    buildingAnimation: true, //楼块出现是否带动画
+    expandZoomRange: true,
+    zooms: [3, 20],
+    scrollWheel: true,
+    mapStyle: "amap://styles/2c24c72703450fe5ca6b35b188ec69c1",
 }
+const map = new AMap.Map("mapBox", {
+    //启动3D地图
+    zoom: 12, //级别
+    center: [116.397428, 39.90923], //中心点坐标
+    pitch: 50,
+    resizeEnable: true,
+    rotateEnable: true,
+    pitchEnable: true,
+    viewMode: "3D", //开启3D视图,默认为关闭
+    buildingAnimation: true, //楼块出现是否带动画
+    expandZoomRange: true,
+    zooms: [3, 20],
+    scrollWheel: true,
+    mapStyle: "amap://styles/2c24c72703450fe5ca6b35b188ec69c1",
+  });
 
-export default initMAp
+  AMap.plugin(["AMap.ControlBar"], function () {
+    // 在图面添加工具条控件，工具条控件集成了缩放、平移、定位等功能按钮在内的组合控件
+    map.addControl(
+      new AMap.ControlBar({
+        showZoomBar: false,
+        showControlButton: true,
+        position: {
+          right: "10px",
+          top: "10px",
+        },
+      })
+    );
+  });
+
+export default map

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Select, Switch, message } from "antd";
 import man from "../../api/mandata";
+import map from "../../api/initMap"
 
 import { BrowserRouter as Router, NavLink } from "react-router-dom";
 
@@ -56,56 +57,11 @@ function Playground() {
         })
       );
     });
-    setLayer(new AMap.Object3DLayer());
+    
     setMap(map);
     //添加物体
     // 以不规则棱柱体 Prism 为例，添加至 3DObjectLayer 图层中
-    var paths = [
-      [116.395951,39.907129],
-      [116.399127,39.907178],
-      [116.399534,39.900413],
-      [116.396316,39.900331]
-  ];
-
-  var bounds = paths.map(function(path) {
-      return new AMap.LngLat(path[0], path[1]);
-  });
-
-  // 创建 Object3D 对象
-  var prism = new AMap.Object3D.Prism({
-      path: bounds,
-      height: 500,
-      color: 'rgba(100, 150, 230, 0.7)' // 支持 #RRGGBB、rgb()、rgba() 格式数据
-  });
-
-  // 开启透明度支持
-  prism.transparent = true;
-  var layer1= new AMap.Object3DLayer()
-  map.add(layer1)
-  // 添加至 3D 图层
-  layer1.add(prism);
-    //悬浮
-    map.on('mousemove', function (ev) {
-      // console.log(ev)
-      var pixel = ev.pixel;
-      var px = new AMap.Pixel(pixel.x, pixel.y);
-      var obj = map.getObject3DByContainerPos(px, [layer1],true);
-      if(obj.length){
-        console.log(obj)
-        // 选中的 face 所在的索引
-        var index = obj.index;
-        // 选中的 object3D 对象，这里为当前 Mesh
-        var object = obj.object;
-        // 被拾取到的对象和拾取射线的交叉点的3D坐标
-        var point = obj.point;
-        // 交叉点距透视原点的距离
-        var distance = obj.distance;
-      }
-     
-
-      // updateInfo(obj);
-      // updateMesh(object);
-  });
+    
   }, []);
 
   

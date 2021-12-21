@@ -55,3 +55,8 @@
   height: 50px;
   background-color: blue;
 }
+
+#mapBox{
+  height: 600px;
+  width: 100%;
+}
