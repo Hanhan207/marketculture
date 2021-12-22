@@ -1,5 +1,5 @@
-import React, {Fragment, useState } from "react";
-import '../App.css'
+import React, { Fragment, useState } from "react";
+import "../App.css";
 
 import MyMarker from "./CirleMarker/MyMarker";
 import MyCircleMarker from "./CirleMarker/circleMarker";
@@ -12,14 +12,10 @@ import {
 
 //AMap-React 组件库
 import { config as AmapReactConfig } from "@amap/amap-react";
-import {
-  Amap,
-  ControlBar,
-  Scale,
-} from "@amap/amap-react";
+import { Amap, ControlBar } from "@amap/amap-react";
 
 //antd 组件库
-import { Button,  message, Space,Input} from "antd";
+import { Button, message, Space, Input } from "antd";
 const { Search } = Input;
 
 //配置AMap
@@ -31,7 +27,6 @@ AmapReactConfig.plugins = [
   "Loca",
   // 在此配置你需要预加载的插件，如果不配置，在使用到的时候会自动异步加载
 ];
-
 
 //地图空间组件
 function SpaceMap() {
@@ -108,7 +103,6 @@ function SpaceMap() {
       }
     });
   }
-
   return (
     <Fragment>
       <Space>
@@ -144,10 +138,8 @@ function SpaceMap() {
         >
           公共空间
         </Button>
-        {/* <Button onClick={IgetRelation}>看看数据</Button> */}
         <Search
           placeholder="输入关键字"
-          // onSearch={findPot}
           onSearch={setSearch}
           style={{ width: 200 }}
         />
@@ -160,8 +152,7 @@ function SpaceMap() {
           zoom="12"
           pitch="35"
         >
-          <ControlBar offset={[30, 10]} position="RT" />
-          <Scale position="RB" />
+          <ControlBar position={{ top: "10px", left: "10px" }} position="RT" />
 
           {markerInfo.length !== 0 && (
             <MyMarker dot={center} info={markerInfo}></MyMarker>

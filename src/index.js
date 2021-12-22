@@ -7,6 +7,7 @@ import MyHeatMap from "./components/HeatMap/heatmap";
 import RelationPage from "./components/Relation/RelationPage";
 import Playground from "./components/Playground/Playgroud";
 import SpaceMap from "./components/SpaceMap";
+import ChartPage from "./components/ChartPage/ChartPage";
 
 
 //antd 组件库
@@ -71,7 +72,7 @@ function SiderLayout() {
               关联分析
             </Menu.Item>
           </SubMenu>
-          <Menu.Item key="4" icon={<BarChartOutlined />}>
+          <Menu.Item key="4" icon={<BarChartOutlined />} onClick={() => setContent(4)}>
             数据统计
           </Menu.Item>
           <SubMenu key="sub2" icon={<BookOutlined />} title="相关文献">
@@ -128,6 +129,19 @@ function SiderLayout() {
               <RelationPage />
             </div>
           </Content>
+        )}
+        {content === 4 && (
+          <Content style={{ margin: "0 16px" }}>
+          {/* <Breadcrumb style={{ margin: "16px 0" }}>
+            <Breadcrumb.Item>数据统计</Breadcrumb.Item>
+          </Breadcrumb> */}
+          <div
+            className="site-layout-background"
+            style={{ padding: 24, minHeight: 360 }}
+          >
+            <ChartPage/>
+          </div>
+        </Content>
         )}
 
         <Footer style={{ textAlign: "center" }}>
