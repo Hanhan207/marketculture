@@ -14,7 +14,6 @@ const { TabPane } = Tabs;
 
 function RealtionPage() {
   const [content, setContent] = useState("Is NOT funny");
-  const [linkData, setLinkData] = useState([]);
   const [personData, setPersonData] = useState({ nodes: [], edges: [] });
 
   useEffect(() => {
@@ -49,7 +48,7 @@ function RealtionPage() {
         </div>
       </TabPane>
       <TabPane tab="人地关系" key="2">
-      <LinkMap data={linkData} />
+      <LinkMap  />
       </TabPane>
       <TabPane tab="综合分析" key="3">
         Content of Tab Pane 3
