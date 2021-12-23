@@ -8,6 +8,7 @@ import RelationPage from "./components/Relation/RelationPage";
 import Playground from "./components/Playground/Playgroud";
 import SpaceMap from "./components/SpaceMap";
 import ChartPage from "./components/ChartPage/ChartPage";
+import Contact from './components/Contact'
 
 
 //antd 组件库
@@ -80,9 +81,9 @@ function SiderLayout() {
           </Menu.Item>
           <SubMenu key="sub2" icon={<BookOutlined />} title="相关文献">
             <Menu.Item key="6">古都文化</Menu.Item>
-            <Menu.Item key="8">可视分析</Menu.Item>
+            <Menu.Item key="7">可视分析</Menu.Item>
           </SubMenu>
-          <Menu.Item key="9" icon={<WhatsAppOutlined />}>
+          <Menu.Item key="8" icon={<WhatsAppOutlined />} onClick={() => setContent(8)}>
             联系方式
           </Menu.Item>
         </Menu>
@@ -143,6 +144,17 @@ function SiderLayout() {
             style={{ padding: 24, minHeight: 360 }}
           >
             <ChartPage/>
+          </div>
+        </Content>
+        )}
+        {content === 8 && (
+          <Content style={{ margin: "0 16px" }}>
+          
+          <div
+            className="site-layout-background"
+            style={{ padding: 24, minHeight: 360 }}
+          >
+           <Contact/>
           </div>
         </Content>
         )}
