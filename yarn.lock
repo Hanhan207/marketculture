@@ -189,6 +189,22 @@
     ml-matrix "^6.5.0"
     tslib "^2.1.0"
 
+"@antv/g6-core@0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@antv/g6-core/-/g6-core-0.5.1.tgz#5b3fdbfe29718bbb6c1ca1b93325a3010c179cc3"
+  integrity sha512-OPvUytoPkb9RR9+xpBzaMkMb1vPKw9/9pumx0xe0Dw14LA85pRepkfOJqmbAUSZDXvi9YVOAK7CkuSXkgioYFw==
+  dependencies:
+    "@antv/algorithm" "^0.1.8"
+    "@antv/dom-util" "^2.0.1"
+    "@antv/event-emitter" "~0.1.0"
+    "@antv/g-base" "^0.5.1"
+    "@antv/g-math" "^0.1.1"
+    "@antv/matrix-util" "^3.1.0-beta.3"
+    "@antv/path-util" "^2.0.3"
+    "@antv/util" "~2.0.5"
+    ml-matrix "^6.5.0"
+    tslib "^2.1.0"
+
 "@antv/g6-element@0.4.1":
   version "0.4.1"
   resolved "https://registry.npmmirror.com/@antv/g6-element/download/@antv/g6-element-0.4.1.tgz?cache=0&sync_timestamp=1637050724743&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40antv%2Fg6-element%2Fdownload%2F%40antv%2Fg6-element-0.4.1.tgz#0c4eba46ca3f72912bfd13be90ee23d7796f006c"
@@ -196,6 +212,15 @@
   dependencies:
     "@antv/g-base" "^0.5.1"
     "@antv/g6-core" "0.4.1"
+    "@antv/util" "~2.0.5"
+
+"@antv/g6-element@0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@antv/g6-element/-/g6-element-0.5.1.tgz#e54796b266cbb3326ad3f1cfca3073be02b9d04e"
+  integrity sha512-ohCzA1s1QQRiat9Bdn206z/KR3uLugtlepYWFx+kSaMeRqJsRWOptb5pbTtb70kzOTvfIFrFc36t8YNBKqQyKg==
+  dependencies:
+    "@antv/g-base" "^0.5.1"
+    "@antv/g6-core" "0.5.1"
     "@antv/util" "~2.0.5"
 
 "@antv/g6-pc@0.4.1":
@@ -225,6 +250,33 @@
     insert-css "^2.0.0"
     ml-matrix "^6.5.0"
 
+"@antv/g6-pc@0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@antv/g6-pc/-/g6-pc-0.5.1.tgz#b3a4048dde0611d9387a38022327bb6a360abd33"
+  integrity sha512-StwDDjvYSUlx61qquQs96qLaSDZlNx7HJ/NQeOZx99RRe4DFx0jLDzwCbQzoz5iV5K1RgAE8Jft423BYqTzWuQ==
+  dependencies:
+    "@ant-design/colors" "^4.0.5"
+    "@antv/algorithm" "^0.1.8"
+    "@antv/dom-util" "^2.0.1"
+    "@antv/event-emitter" "~0.1.0"
+    "@antv/g-base" "^0.5.1"
+    "@antv/g-canvas" "^0.5.2"
+    "@antv/g-math" "^0.1.1"
+    "@antv/g-svg" "^0.5.1"
+    "@antv/g6-core" "0.5.1"
+    "@antv/g6-element" "0.5.1"
+    "@antv/g6-plugin" "0.5.1"
+    "@antv/hierarchy" "^0.6.7"
+    "@antv/layout" "^0.1.22"
+    "@antv/matrix-util" "^3.1.0-beta.3"
+    "@antv/path-util" "^2.0.3"
+    "@antv/util" "~2.0.5"
+    color "^3.1.3"
+    d3-force "^2.0.1"
+    dagre "^0.8.5"
+    insert-css "^2.0.0"
+    ml-matrix "^6.5.0"
+
 "@antv/g6-plugin@0.4.1":
   version "0.4.1"
   resolved "https://registry.npmmirror.com/@antv/g6-plugin/download/@antv/g6-plugin-0.4.1.tgz?cache=0&sync_timestamp=1637050725126&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40antv%2Fg6-plugin%2Fdownload%2F%40antv%2Fg6-plugin-0.4.1.tgz#4696d27a23efbefa5a290845e45648b9bd11def5"
@@ -240,12 +292,52 @@
     "@antv/util" "^2.0.9"
     insert-css "^2.0.0"
 
+"@antv/g6-plugin@0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@antv/g6-plugin/-/g6-plugin-0.5.1.tgz#1a19620a979d86b2a8ba6aa61bc93ce32d0d743b"
+  integrity sha512-37sPqc4rkqO/8OFGX3LhgDQlaWKV4NYkAB8e5rH6QXsSuNAZoU5B5PGjcCHkx5mG4UPdLVFgUUU3rLoCOmEHHQ==
+  dependencies:
+    "@antv/dom-util" "^2.0.2"
+    "@antv/g-base" "^0.5.1"
+    "@antv/g-canvas" "^0.5.2"
+    "@antv/g-svg" "^0.5.2"
+    "@antv/g6-core" "0.5.1"
+    "@antv/matrix-util" "^3.1.0-beta.3"
+    "@antv/scale" "^0.3.4"
+    "@antv/util" "^2.0.9"
+    insert-css "^2.0.0"
+
 "@antv/g6@^4.4.1":
   version "4.4.1"
   resolved "https://registry.npmmirror.com/@antv/g6/download/@antv/g6-4.4.1.tgz#c7290bfae5c6e0a9b0e4349ab4d2c50d3a2f2956"
   integrity sha512-7chX89HuWgGGmSnwlS54xUEI/g+CiH4lB/OrrQ/CG3LedZ+TvFEI22giDr10WsB2SgHrbJpbxxtY57O7FwbKhA==
   dependencies:
     "@antv/g6-pc" "0.4.1"
+
+"@antv/g6@^4.5.0":
+  version "4.5.1"
+  resolved "https://registry.yarnpkg.com/@antv/g6/-/g6-4.5.1.tgz#7c5351b8f8efd9d8dd53ce2f53d344fbb0cde9a5"
+  integrity sha512-ZI7V5cQFhiG0QcPpDonkTk07viAa5wZe98EJIOeQiS58vmc7LBCeCt3Vbgqtxh0k7Oo7yhpb1IoLALVxJLxT3g==
+  dependencies:
+    "@antv/g6-pc" "0.5.1"
+
+"@antv/graphin-components@^2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@antv/graphin-components/-/graphin-components-2.4.0.tgz#d6fad1b124f65eebf649a0d30c72c379d59c9b7d"
+  integrity sha512-ADVcQlwMO9p18qBIxdK+nddzA+73OXxKPSLMeeF5B4f9USvC9b4cB9q4ciYbslRQrpUkUpWBdbY+44jq38f/Yg==
+  dependencies:
+    "@antv/util" "^2.0.10"
+
+"@antv/graphin@^2.4.10":
+  version "2.4.10"
+  resolved "https://registry.yarnpkg.com/@antv/graphin/-/graphin-2.4.10.tgz#37185ca53ef54d3b9c961f086f0c68b8c9747556"
+  integrity sha512-9/P9aOixhXA4saDAPUJvAk7A3KSio43kwwPOOhLvUeRlShq4Z60yBJgMv8cQCR+q1Mgm/OMLc/Vn+0FFfb+Ikg==
+  dependencies:
+    "@antv/g6" "^4.5.0"
+    "@antv/util" "^2.0.10"
+    "@types/lodash.clonedeep" "^4.5.6"
+    d3-quadtree "^3.0.1"
+    lodash.clonedeep "^4.5.0"
 
 "@antv/hierarchy@^0.6.7":
   version "0.6.8"
@@ -262,6 +354,16 @@
     "@antv/g-webgpu" "0.5.5"
     d3-force "^2.0.1"
     dagrejs "^0.2.1"
+    ml-matrix "^6.5.0"
+
+"@antv/layout@^0.1.22":
+  version "0.1.24"
+  resolved "https://registry.yarnpkg.com/@antv/layout/-/layout-0.1.24.tgz#326d66ebe3a70846b8881aa3664738dec4d8d69f"
+  integrity sha512-Uihq18tFMZZ8iFwYIX2+3nZtn1FK3sI/bxxQ4ChzOFPNXc70pmAVCh/8DTxmforSbq6iuvBRnpuyXWiF2c/jEg==
+  dependencies:
+    "@antv/g-webgpu" "0.5.5"
+    "@dagrejs/graphlib" "2.1.4"
+    d3-force "^2.0.1"
     ml-matrix "^6.5.0"
 
 "@antv/matrix-util@^3.0.4":
@@ -300,7 +402,7 @@
     fecha "~4.2.0"
     tslib "^2.0.0"
 
-"@antv/util@^2.0.13", "@antv/util@^2.0.7", "@antv/util@^2.0.9", "@antv/util@~2.0.0", "@antv/util@~2.0.3", "@antv/util@~2.0.5":
+"@antv/util@^2.0.10", "@antv/util@^2.0.13", "@antv/util@^2.0.7", "@antv/util@^2.0.9", "@antv/util@~2.0.0", "@antv/util@~2.0.3", "@antv/util@~2.0.5":
   version "2.0.17"
   resolved "https://registry.npmmirror.com/@antv/util/download/@antv/util-2.0.17.tgz?cache=0&sync_timestamp=1636447902105&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40antv%2Futil%2Fdownload%2F%40antv%2Futil-2.0.17.tgz#e8ef42aca7892815b229269f3dd10c6b3c7597a9"
   integrity sha1-6O9CrKeJKBWyKSafPdEMazx1l6k=
@@ -1479,6 +1581,13 @@
   resolved "https://registry.npm.taobao.org/@ctrl/tinycolor/download/@ctrl/tinycolor-3.4.0.tgz#c3c5ae543c897caa9c2a68630bed355be5f9990f"
   integrity sha1-w8WuVDyJfKqcKmhjC+01W+X5mQ8=
 
+"@dagrejs/graphlib@2.1.4":
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/@dagrejs/graphlib/-/graphlib-2.1.4.tgz#86c70e4f073844a2f4ada254c8c7b88a6bdacdb1"
+  integrity sha512-QCg9sL4uhjn468FDEsb/S9hS2xUZSrv/+dApb1Ze5VKO96pTXKNJZ6MGhIpgWkc1TVhbVGH9/7rq/Mf8/jWicw==
+  dependencies:
+    lodash "^4.11.1"
+
 "@eslint/eslintrc@^0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-0.3.0.tgz#d736d6963d7003b6514e6324bec9c602ac340318"
@@ -2081,6 +2190,18 @@
   version "0.0.29"
   resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
   integrity sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
+
+"@types/lodash.clonedeep@^4.5.6":
+  version "4.5.6"
+  resolved "https://registry.yarnpkg.com/@types/lodash.clonedeep/-/lodash.clonedeep-4.5.6.tgz#3b6c40a0affe0799a2ce823b440a6cf33571d32b"
+  integrity sha512-cE1jYr2dEg1wBImvXlNtp0xDoS79rfEdGozQVgliDZj1uERH4k+rmEMTudP9b4VQ8O6nRb5gPqft0QzEQGMQgA==
+  dependencies:
+    "@types/lodash" "*"
+
+"@types/lodash@*":
+  version "4.14.178"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.178.tgz#341f6d2247db528d4a13ddbb374bcdc80406f4f8"
+  integrity sha512-0d5Wd09ItQWH1qFbEyQ7oTQ3GZrMfth5JkbN3EvTKLXcHLRDSXeLnlvlOn0wvxVIwK5o2M8JzP/OWz7T3NRsbw==
 
 "@types/minimatch@*":
   version "3.0.3"
@@ -4312,6 +4433,11 @@ d3-polygon@^1.0.3:
   version "2.0.0"
   resolved "https://registry.nlark.com/d3-quadtree/download/d3-quadtree-2.0.0.tgz#edbad045cef88701f6fee3aee8e93fb332d30f9d"
   integrity sha1-7brQRc74hwH2/uOu6Ok/szLTD50=
+
+d3-quadtree@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/d3-quadtree/-/d3-quadtree-3.0.1.tgz#6dca3e8be2b393c9a9d514dabbd80a92deef1a4f"
+  integrity sha512-04xDrxQTDTCFwP5H6hRhsRcb9xxv2RzkcsygFzmkSIOJy3PeRJP7sNk3VRIbKXcog561P9oU0/rVH6vDROAgUw==
 
 "d3-timer@1 - 2":
   version "2.0.0"
@@ -7492,6 +7618,11 @@ lodash._reinterpolate@^3.0.0:
   resolved "https://registry.yarnpkg.com/lodash._reinterpolate/-/lodash._reinterpolate-3.0.0.tgz#0ccf2d89166af03b3663c796538b75ac6e114d9d"
   integrity sha1-DM8tiRZq8Ds2Y8eWU4t1rG4RTZ0=
 
+lodash.clonedeep@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
+  integrity sha1-4j8/nE+Pvd6HJSnBBxhXoIblzO8=
+
 lodash.memoize@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
@@ -7522,7 +7653,7 @@ lodash.uniq@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
 
-"lodash@>=3.5 <5", lodash@^4.17.11, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.20, lodash@^4.17.21, lodash@^4.17.5:
+"lodash@>=3.5 <5", lodash@^4.11.1, lodash@^4.17.11, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.20, lodash@^4.17.21, lodash@^4.17.5:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==

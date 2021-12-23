@@ -9,6 +9,7 @@ import {
 
 import LinkMap from "./Linkmap";
 import Arcmap from "./Arcmap";
+import AllRelation from "./AllReation";
 
 const { TabPane } = Tabs;
 
@@ -51,7 +52,7 @@ function RealtionPage() {
       <LinkMap  />
       </TabPane>
       <TabPane tab="综合分析" key="3">
-        Content of Tab Pane 3
+        <AllRelation/>
       </TabPane>
     </Tabs>
   );

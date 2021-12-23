@@ -203,6 +203,52 @@ function getPerson() {
     });
 }
 
+//查询整个数据库
+function getAll(){
+  var session = driver.session();
+  var nodes = [];
+  var edges = [];
+  return session
+    .run("MATCH (m)-[r]-(n) RETURN m,r,n")
+    .then((result) => {
+      
+      result.records.forEach((record) => {
+        edges.push({
+          source: record.get("r").start.low + "",
+          target: record.get("r").end.low + "",
+          properties: record.get("r").properties,
+        });
+        nodes.push({
+          id:record.get("m").identity.low+ "",
+          labels:record.get("m").labels[0],
+          properties:record.get("m").properties
+        }
+          );
+        nodes.push({
+          id:record.get("n").identity.low+ "",
+          labels:record.get("n").labels[0],
+          properties:record.get("n").properties
+        });
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+    .then(() => {
+      session.close();
+      let myData = { nodes: quchongAll(nodes), edges: edges };
+      return myData;
+    });
+}
+
+//去重数据-All
+function quchongAll(arr) {
+  const res = new Map();
+  return arr.filter(
+    (a) => !res.has(a.id) && res.set(a.id, 1)
+  );
+}
+
 //去重数据
 function quchong(arr) {
   const res = new Map();
@@ -219,4 +265,5 @@ export {
   getHeatAll,
   getPerson,
   getManPlace,
+  getAll,
 };

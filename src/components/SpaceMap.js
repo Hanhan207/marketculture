@@ -144,7 +144,7 @@ function SpaceMap() {
           style={{ width: 200 }}
         />
       </Space>
-      <div style={{ width: "100%", height: 600, marginTop: 30 }}>
+      <div id="mapBox">
         <Amap
           viewMode="3D"
           center={center}
