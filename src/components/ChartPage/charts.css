@@ -24,10 +24,13 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-
 }
 
 #nodeBox{
   width: 500px;
   height: 500px;
+}
+
+.check{
+  border: 2px solid blue;
 }

@@ -1,4 +1,4 @@
-import { Pie } from "@antv/g2plot";
+import { Pie, Column } from "@antv/g2plot";
 import React, { useEffect, useState } from "react";
 import Graphin, { Behaviors, Utils, GraphinContext } from "@antv/graphin";
 import {
@@ -14,19 +14,15 @@ function CardContent(e) {
   var type = e.type;
   var index = e.index;
   var chartdata = e.data;
-  useEffect(() => {
-        
-  }, []);
-
-  
+  useEffect(() => {}, []);
 
   return (
-    <div  id="nodeBox">
+    <div id="nodeBox">
       {type === "人物关系图" && <NodeMap data={chartdata} />}
-      {type === '老字号分布图' &&  <East index ={index}/>}
-      {type === '地标分布图' && <div>地标分布图</div>}
-      {type === '胡同分布图' && <div >胡同分布图</div>}
-      {type === '剧院分布图' && <div >剧院分布图</div>}
+      {type === "老字号分布图" && <East index={index} />}
+      {type === "地标类型" && <DbType />}
+      {type === "胡同分布图" && <div>胡同分布图</div>}
+      {type === "剧院分布图" && <div>剧院分布图</div>}
       {/* <pre>{JSON.stringify(chartdata, null, 2)}</pre> */}
       {/* */}
     </div>
@@ -76,50 +72,114 @@ function NodeMap(e) {
     return edges;
   }
   return (
-      <div id="nodeBox">
- <Graphin style={{width:'100%'}} data={node} layout={{ type: "gForce" }}>
+    <div id="nodeBox">
+      <Graphin
+        style={{ width: "100%" }}
+        data={node}
+        layout={{ type: "gForce" }}
+      >
         <ActivateRelations />
       </Graphin>
-      </div>
-     
+    </div>
   );
 }
 //东西城分布图
 function East(e) {
-    useEffect(() => {
-        const piePlot = new Pie(`pie_${e.index}`, {
-            appendPadding: 10,
-            data,
-            angleField: 'value',
-            colorField: 'type',
-            radius: 0.9,
-            label: {
-              type: 'inner',
-              offset: '-30%',
-              content: ({ percent }) => `${(percent * 100).toFixed(0)}%`,
-              style: {
-                fontSize: 14,
-                textAlign: 'center',
-              },
-            },
-            interactions: [{ type: 'element-active' }],
-          });
-          piePlot.render();
-      
-    }, [])
+  useEffect(() => {
+    const piePlot = new Pie(`pie_${e.index}`, {
+      appendPadding: 10,
+      data,
+      angleField: "value",
+      colorField: "type",
+      radius: 0.9,
+      label: {
+        type: "inner",
+        offset: "-30%",
+        content: ({ percent }) => `${(percent * 100).toFixed(0)}%`,
+        style: {
+          fontSize: 14,
+          textAlign: "center",
+        },
+      },
+      interactions: [{ type: "element-active" }],
+    });
+    piePlot.render();
+  }, []);
 
-    const data = [
-        { type: "分类一", value: 27 },
-        { type: "分类二", value: 25 },
-        { type: "分类三", value: 18 },
-        { type: "分类四", value: 15 },
-        { type: "分类五", value: 10 },
-        { type: "其他", value: 5 },
-      ];
+  const data = [
+    { type: "分类一", value: 27 },
+    { type: "分类二", value: 25 },
+    { type: "分类三", value: 18 },
+    { type: "分类四", value: 15 },
+    { type: "分类五", value: 10 },
+    { type: "其他", value: 5 },
+  ];
 
-    return (
-        <div id={'pie_'+e.index} ></div>
-    )
+  return <div id={"pie_" + e.index}></div>;
+}
+
+//地标类型图
+function DbType() {
+  const db_data = [
+    {
+      type: "来往路线型",
+      counts: 60,
+    },
+    {
+      type: "象征型",
+      counts: 33,
+    },
+    {
+      type: "生活环境型",
+      counts: 16,
+    },
+    {
+      type: "店铺型",
+      counts: 13,
+    },
+    {
+      type: "满汉交融型",
+      counts: 6,
+    },
+    {
+      type: "雅玩习气型",
+      counts: 6,
+    },
+  ];
+  useEffect(() => {
+    const columnPlot = new Column("db_type", {
+      data: db_data,
+      xField: "type",
+      yField: "counts",
+      label: {
+        // 可手动配置 label 数据标签位置
+        position: "middle", // 'top', 'bottom', 'middle',
+        // 配置样式
+        style: {
+          fill: "#FFFFFF",
+          opacity: 0.6,
+        },
+      },
+      xAxis: {
+        label: {
+          autoHide: true,
+          autoRotate: false,
+        },
+      },
+      meta: {
+        type: {
+          alias: "类别",
+        },
+        sales: {
+          alias: "销售额",
+        },
+      },
+    });
+
+    columnPlot.render();
+  }, []);
+
+  return <div id="db_type"></div>;
 }
 
 export default CardContent;

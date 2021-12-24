@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./charts.css";
 import { Pie } from "@antv/g2plot";
-import { getInfo as IgetInfo,getMan as IgetPerson } from "../../api/Ineo4j";
+import { getInfo as IgetInfo, getMan as IgetPerson } from "../../api/Ineo4j";
 
 import CardContent from "./ChartCard";
 
@@ -73,72 +73,122 @@ function setContent(e) {
 }
 
 function StepOne() {
-  function onChange(checkedValues) {
-    checked = checkedValues;
-    console.log("checked = ", checked);
+  const [checklist, setchecklist] = useState([
+    {
+      title: "人物",
+      checked: false,
+    },
+    {
+      title: "地标",
+      checked: false,
+    },
+    {
+      title: "戏院",
+      checked: false,
+    },
+    {
+      title: "胡同",
+      checked: false,
+    },
+    {
+      title: "老字号",
+      checked: false,
+    },
+  ]);
+
+  function onChange(index) {
+    console.log(index);
+    checklist[index].checked = !checklist[index].checked;
+    console.log(checklist);
   }
+
   return (
-    <Checkbox.Group style={{ width: "100%" }} onChange={onChange}>
-      <Row>
-        <Col span={8}>
-          <Checkbox value="man">人物</Checkbox>
-        </Col>
-        <Col span={8}>
-          <Checkbox value="ht">胡同</Checkbox>
-        </Col>
-        <Col span={8}>
-          <Checkbox value="thb">老字号</Checkbox>
-        </Col>
-        <Col span={8}>
-          <Checkbox value="op">剧院</Checkbox>
-        </Col>
-        <Col span={8}>
-          <Checkbox value="db">地标</Checkbox>
-        </Col>
-      </Row>
-    </Checkbox.Group>
+    // <div>
+    //   {checklist.map((item,index)=>
+    //   <div   key={index}>
+    //     <h1> <pre>{JSON.stringify(item.checked, null, 2)}</pre></h1>
+    //      <Card
+    //    bordered={item.checked}
+    //     //  className={item.checked ? "check" : "uncheck"}
+    //      title={item.title}
+    //      onClick={(e)=>onChange(index)}
+    //    >
+    //      <pre>{JSON.stringify(item.checked, null, 2)}</pre>
+    //    </Card>
+    //   </div>
+
+    //   )}
+    // </div>
+    <List
+      className="ChartList"
+      grid={{
+        gutter: 16,
+        xs: 1,
+        sm: 2,
+        md: 4,
+        lg: 4,
+        xl: 6,
+        xxl: 3,
+      }}
+      dataSource={checklist}
+      renderItem={(item, index) => (
+        <List.Item>
+          <Card
+            hoverable="true"
+            bordered={item.checked}
+            key={index}
+            className={item.checked ? "check" : "uncheck"}
+            title={item.title}
+            onClick={(e) => onChange(index)}
+          >
+             <pre>{JSON.stringify(item.checked, null, 2)}</pre>
+          </Card>
+        </List.Item>
+      )}
+    />
   );
 }
 
 function StepTwo() {
-  var chartdata = []
- for(var i=0;i<Infos.length;i++){
-   switch(Infos[i].title){
-     case 'man':
-       chartdata.push({
-         title:'人物关系图',
-         data:Infos[i].data
-       })
-       break
-       case 'op':
-         chartdata.push({
-           title:'剧院分布图',
-           data:Infos[i].data
-         })
-         break
-         case 'ht':
-         chartdata.push({
-           title:'胡同分布图',
-           data:Infos[i].data
-         })
-         break
-         case 'thb':
-         chartdata.push({
-           title:'老字号分布图',
-           data:Infos[i].data
-         })
-         break
-         case 'db':
-         chartdata.push({
-           title:'地标分布图',
-           data:Infos[i].data
-         })
-         break
-         default: break
-   }
- }
+  var chartdata = [];
+  for (var i = 0; i < Infos.length; i++) {
+    switch (Infos[i].title) {
+      case "man":
+        chartdata.push({
+          title: "人物关系图",
+          data: Infos[i].data,
+        });
+        break;
+      case "op":
+        chartdata.push({
+          title: "剧院分布图",
+          data: Infos[i].data,
+        });
+        break;
+      case "ht":
+        chartdata.push({
+          title: "胡同分布图",
+          data: Infos[i].data,
+        });
+        break;
+      case "thb":
+        chartdata.push({
+          title: "老字号分布图",
+          data: Infos[i].data,
+        });
+        break;
+      case "db":
+        chartdata.push({
+          title: "地标类型",
+          data: Infos[i].data,
+        });
+        break;
+      default:
+        break;
+    }
+  }
   return (
-     <List
+    <List
       className="ChartList"
       grid={{
         gutter: 16,
@@ -153,7 +203,7 @@ function StepTwo() {
       renderItem={(item, index) => (
         <List.Item>
           <Card title={item.title}>
-            <CardContent data={item.data} index={index} type = {item.title} />
+            <CardContent data={item.data} index={index} type={item.title} />
           </Card>
         </List.Item>
       )}
@@ -170,24 +220,23 @@ function ChartPage() {
     setcurrent(current - 1);
   };
 
- async function getData() {
+  async function getData() {
     if (checked.length) {
       for (var i = 0; i < checked.length; i++) {
-        if(checked[i] === 'man'){
-          await IgetPerson().then((res)=>{
+        if (checked[i] === "man") {
+          await IgetPerson().then((res) => {
             Infos.push({
-              title:'man',
-              data:res
-            })
-          })
-        }else {
-          await IgetInfo(checked[i])
-          .then((res) => {
+              title: "man",
+              data: res,
+            });
+          });
+        } else {
+          await IgetInfo(checked[i]).then((res) => {
             Infos.push({
               title: res.type,
               data: res,
             });
-          })
+          });
         }
       }
       setcurrent(1);
@@ -195,7 +244,6 @@ function ChartPage() {
       message.warning("请先选择数据源");
     }
   }
-
 
   function backToOne() {
     Infos = [];
