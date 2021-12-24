@@ -241,6 +241,44 @@ function getAll(){
     });
 }
 
+//查询整个数据库
+function getMan(){
+  var session = driver.session();
+  var nodes = [];
+  var edges = [];
+  return session
+    .run("MATCH (m:man)-[r]-(n:man) RETURN m,r,n")
+    .then((result) => {
+      
+      result.records.forEach((record) => {
+        edges.push({
+          source: record.get("r").start.low + "",
+          target: record.get("r").end.low + "",
+          properties: record.get("r").properties,
+        });
+        nodes.push({
+          id:record.get("m").identity.low+ "",
+          labels:record.get("m").labels[0],
+          properties:record.get("m").properties
+        }
+          );
+        nodes.push({
+          id:record.get("n").identity.low+ "",
+          labels:record.get("n").labels[0],
+          properties:record.get("n").properties
+        });
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+    .then(() => {
+      session.close();
+      let myData = { nodes: quchongAll(nodes), edges: edges };
+      return myData;
+    });
+}
+
 //去重数据-All
 function quchongAll(arr) {
   const res = new Map();
@@ -257,6 +295,33 @@ function quchong(arr) {
   );
 }
 
+//查询基础信息
+function getInfo(type){
+  var session = driver.session();
+  var myData={
+    type:type,
+    data:[]
+  }
+  var nodes = [];
+  var edges = [];
+  return session
+    .run(`MATCH (m:${type}) RETURN m`)
+    .then((result) => {
+      result.records.forEach((record) => {
+        myData.data.push(record.get("m"));
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+    .then(() => {
+      session.close();
+      // let myData = { nodes: quchongAll(nodes), edges: edges };
+      return myData;
+    });
+}
+
+
 export {
   getCenter,
   getSpace,
@@ -266,4 +331,6 @@ export {
   getPerson,
   getManPlace,
   getAll,
+  getInfo,
+  getMan,
 };

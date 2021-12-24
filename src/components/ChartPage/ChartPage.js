@@ -1,18 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./charts.css";
-import { Pie } from '@antv/g2plot';
+import { Pie } from "@antv/g2plot";
+import { getInfo as IgetInfo,getMan as IgetPerson } from "../../api/Ineo4j";
+
+import CardContent from "./ChartCard";
 
 import { Steps, Button, message } from "antd";
-import { Checkbox, Row, Col ,Card,List} from "antd";
-
-const piedata = [
-  { type: '分类一', value: 27 },
-  { type: '分类二', value: 25 },
-  { type: '分类三', value: 18 },
-  { type: '分类四', value: 15 },
-  { type: '分类五', value: 10 },
-  { type: '其他', value: 5 },
-];
+import { Checkbox, Row, Col, Card, List } from "antd";
 
 const { Step } = Steps;
 const steps = [
@@ -32,31 +26,34 @@ const steps = [
 
 const mockCharts = [
   {
-    title:'胡同',
-    type:'热力图',
-    content : 'hello'
+    title: "胡同",
+    type: "热力图",
+    content: "hello",
   },
   {
-    title:'胡同',
-    type:'热力图',
-    content : 'hello'
+    title: "胡同",
+    type: "热力图",
+    content: "hello",
   },
   {
-    title:'胡同',
-    type:'热力图',
-    content : 'hello'
+    title: "胡同",
+    type: "热力图",
+    content: "hello",
   },
   {
-    title:'胡同',
-    type:'热力图',
-    content : 'hello'
+    title: "胡同",
+    type: "热力图",
+    content: "hello",
   },
   {
-    title:'胡同',
-    type:'热力图',
-    content : 'hello'
-  }
-]
+    title: "胡同",
+    type: "热力图",
+    content: "hello",
+  },
+];
+
+var checked = [];
+var Infos = [];
 
 function setContent(e) {
   switch (e) {
@@ -64,7 +61,7 @@ function setContent(e) {
       return <StepOne />;
       break;
     case 1:
-      return <StepTwo/>;
+      return <StepTwo />;
       break;
     case 2:
       return "2";
@@ -75,88 +72,93 @@ function setContent(e) {
   }
 }
 
-
 function StepOne() {
   function onChange(checkedValues) {
-    console.log("checked = ", checkedValues);
+    checked = checkedValues;
+    console.log("checked = ", checked);
   }
   return (
     <Checkbox.Group style={{ width: "100%" }} onChange={onChange}>
       <Row>
         <Col span={8}>
-          <Checkbox value="A">人物</Checkbox>
+          <Checkbox value="man">人物</Checkbox>
         </Col>
         <Col span={8}>
-          <Checkbox value="B">胡同</Checkbox>
+          <Checkbox value="ht">胡同</Checkbox>
         </Col>
         <Col span={8}>
-          <Checkbox value="C">老字号</Checkbox>
+          <Checkbox value="thb">老字号</Checkbox>
         </Col>
         <Col span={8}>
-          <Checkbox value="D">剧院</Checkbox>
+          <Checkbox value="op">剧院</Checkbox>
         </Col>
         <Col span={8}>
-          <Checkbox value="E">地标</Checkbox>
+          <Checkbox value="db">地标</Checkbox>
         </Col>
       </Row>
     </Checkbox.Group>
   );
 }
 
-function StepTwo(){
-
-  const data = [
-    { type: '分类一', value: 27 },
-    { type: '分类二', value: 25 },
-    { type: '分类三', value: 18 },
-    { type: '分类四', value: 15 },
-    { type: '分类五', value: 10 },
-    { type: '其他', value: 5 },
-  ];
-  
-  // const piePlot = new Pie('pie', {
-  //   appendPadding: 10,
-  //   data,
-  //   angleField: 'value',
-  //   colorField: 'type',
-  //   radius: 0.9,
-  //   label: {
-  //     type: 'inner',
-  //     offset: '-30%',
-  //     content: ({ percent }) => `${(percent * 100).toFixed(0)}%`,
-  //     style: {
-  //       fontSize: 14,
-  //       textAlign: 'center',
-  //     },
-  //   },
-  //   interactions: [{ type: 'element-active' }],
-  // });
-  
-  // piePlot.render();
-
-  return(
-    <div>
-      <div id="pie"></div>
-      <List className="ChartList"
-    grid={{
-      gutter: 16,
-      xs: 1,
-      sm: 2,
-      md: 4,
-      lg: 4,
-      xl: 6,
-      xxl: 3,
-    }}
-    dataSource={mockCharts}
-    renderItem={item => (
-      <List.Item>
-        <Card title={item.title}></Card>
-      </List.Item>
-    )}
-  />
-    </div>
-  
-  )
+function StepTwo() {
+  var chartdata = []
+ for(var i=0;i<Infos.length;i++){
+   switch(Infos[i].title){
+     case 'man':
+       chartdata.push({
+         title:'人物关系图',
+         data:Infos[i].data
+       })
+       break
+       case 'op':
+         chartdata.push({
+           title:'剧院分布图',
+           data:Infos[i].data
+         })
+         break
+         case 'ht':
+         chartdata.push({
+           title:'胡同分布图',
+           data:Infos[i].data
+         })
+         break
+         case 'thb':
+         chartdata.push({
+           title:'老字号分布图',
+           data:Infos[i].data
+         })
+         break
+         case 'db':
+         chartdata.push({
+           title:'地标分布图',
+           data:Infos[i].data
+         })
+         break
+         default: break
+   }
+ }
+  return (
+     <List
+      className="ChartList"
+      grid={{
+        gutter: 16,
+        xs: 1,
+        sm: 2,
+        md: 4,
+        lg: 4,
+        xl: 6,
+        xxl: 3,
+      }}
+      dataSource={chartdata}
+      renderItem={(item, index) => (
+        <List.Item>
+          <Card title={item.title}>
+            <CardContent data={item.data} index={index} type = {item.title} />
+          </Card>
+        </List.Item>
+      )}
+    />
+  );
 }
 
 function ChartPage() {
@@ -167,6 +169,40 @@ function ChartPage() {
   const prev = () => {
     setcurrent(current - 1);
   };
+
+ async function getData() {
+    if (checked.length) {
+      for (var i = 0; i < checked.length; i++) {
+        if(checked[i] === 'man'){
+          await IgetPerson().then((res)=>{
+            Infos.push({
+              title:'man',
+              data:res
+            })
+          })
+        }else {
+          await IgetInfo(checked[i])
+          .then((res) => {
+            Infos.push({
+              title: res.type,
+              data: res,
+            });
+          })
+        }
+      }
+      setcurrent(1);
+    } else {
+      message.warning("请先选择数据源");
+    }
+  }
+
+
+  function backToOne() {
+    Infos = [];
+    checked = [];
+    setcurrent(0);
+  }
+
   return (
     <>
       <Steps current={current}>
@@ -174,16 +210,24 @@ function ChartPage() {
           <Step key={item.title} title={item.title} />
         ))}
       </Steps>
-      <div className="steps-content">
-        {setContent(current)}
-      </div>
+      <div className="steps-content">{setContent(current)}</div>
       <div className="steps-action">
-      {current > 0 && (
+        {current === 1 && (
+          <Button style={{ margin: "0 8px" }} onClick={() => backToOne()}>
+            上一步
+          </Button>
+        )}
+        {current === 2 && (
           <Button style={{ margin: "0 8px" }} onClick={() => prev()}>
             上一步
           </Button>
         )}
-        {current < steps.length - 1 && (
+        {current === 0 && (
+          <Button type="primary" onClick={() => getData()}>
+            下一步
+          </Button>
+        )}
+        {current === 1 && (
           <Button type="primary" onClick={() => next()}>
             下一步
           </Button>
@@ -196,7 +240,6 @@ function ChartPage() {
             保存图片
           </Button>
         )}
-       
       </div>
     </>
   );
