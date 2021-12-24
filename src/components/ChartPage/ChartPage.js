@@ -55,6 +55,8 @@ const mockCharts = [
 var checked = [];
 var Infos = [];
 
+var mychecklist = []
+
 function setContent(e) {
   switch (e) {
     case 0:
@@ -76,49 +78,40 @@ function StepOne() {
   const [checklist, setchecklist] = useState([
     {
       title: "人物",
+      type:'man',
       checked: false,
     },
     {
       title: "地标",
+      type:'db',
       checked: false,
     },
     {
       title: "戏院",
+      type:'op',
       checked: false,
     },
     {
       title: "胡同",
+      type:'ht',
       checked: false,
     },
     {
       title: "老字号",
+      type:'thb',
       checked: false,
     },
   ]);
 
   function onChange(index) {
     console.log(index);
-    checklist[index].checked = !checklist[index].checked;
-    console.log(checklist);
+    let data = [...checklist]
+    data[index].checked = !data[index].checked;
+    mychecklist = data
+    setchecklist(data)
   }
 
   return (
-    // <div>
-    //   {checklist.map((item,index)=>
-    //   <div   key={index}>
-    //     <h1> <pre>{JSON.stringify(item.checked, null, 2)}</pre></h1>
-    //      <Card
-    //    bordered={item.checked}
-    //     //  className={item.checked ? "check" : "uncheck"}
-    //      title={item.title}
-    //      onClick={(e)=>onChange(index)}
-    //    >
-    //      <pre>{JSON.stringify(item.checked, null, 2)}</pre>
-    //    </Card>
-    //   </div>
-
-    //   )}
-    // </div>
     <List
       className="ChartList"
       grid={{
@@ -221,9 +214,10 @@ function ChartPage() {
   };
 
   async function getData() {
-    if (checked.length) {
-      for (var i = 0; i < checked.length; i++) {
-        if (checked[i] === "man") {
+    console.log(mychecklist)
+    if (mychecklist.length) {
+      for (var i = 0; i < mychecklist.length && mychecklist[i].checked; i++) {
+        if (mychecklist[i].type === "man") {
           await IgetPerson().then((res) => {
             Infos.push({
               title: "man",
@@ -231,7 +225,7 @@ function ChartPage() {
             });
           });
         } else {
-          await IgetInfo(checked[i]).then((res) => {
+          await IgetInfo(mychecklist[i].type).then((res) => {
             Infos.push({
               title: res.type,
               data: res,
@@ -247,7 +241,7 @@ function ChartPage() {
 
   function backToOne() {
     Infos = [];
-    checked = [];
+    // checked = [];
     setcurrent(0);
   }
 
