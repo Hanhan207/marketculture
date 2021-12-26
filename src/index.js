@@ -4,12 +4,11 @@ import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 
 import MyHeatMap from "./components/HeatMap/heatmap";
-import RelationPage from "./components/Relation/RelationPage";
-import Playground from "./components/Playground/Playgroud";
+import RelationPage from "./components/relation/RelationPage";
+import Playground from "./components/playground/Playgroud";
 import SpaceMap from "./components/SpaceMap";
 import ChartPage from "./components/ChartPage/ChartPage";
-import Contact from './components/Contact'
-
+import Contact from "./components/Contact";
 
 //antd 组件库
 import { Button, Divider, message, Card, Image, Tabs } from "antd";
@@ -26,7 +25,6 @@ import logo from "./img/logo.png";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
-
 
 //布局组件
 function SiderLayout() {
@@ -73,17 +71,25 @@ function SiderLayout() {
               关联分析
             </Menu.Item>
             <Menu.Item key="5" onClick={() => setContent(5)}>
-             中心性分析
+              中心性分析
             </Menu.Item>
           </SubMenu>
-          <Menu.Item key="4" icon={<BarChartOutlined />} onClick={() => setContent(4)}>
+          <Menu.Item
+            key="4"
+            icon={<BarChartOutlined />}
+            onClick={() => setContent(4)}
+          >
             数据统计
           </Menu.Item>
           <SubMenu key="sub2" icon={<BookOutlined />} title="相关文献">
             <Menu.Item key="6">古都文化</Menu.Item>
             <Menu.Item key="7">可视分析</Menu.Item>
           </SubMenu>
-          <Menu.Item key="8" icon={<WhatsAppOutlined />} onClick={() => setContent(8)}>
+          <Menu.Item
+            key="8"
+            icon={<WhatsAppOutlined />}
+            onClick={() => setContent(8)}
+          >
             联系方式
           </Menu.Item>
         </Menu>
@@ -102,7 +108,7 @@ function SiderLayout() {
               style={{ padding: 24, minHeight: 360 }}
             >
               {/* <MainApp></MainApp> */}
-              <SpaceMap/>
+              <SpaceMap />
             </div>
           </Content>
         )}
@@ -136,27 +142,26 @@ function SiderLayout() {
         )}
         {content === 4 && (
           <Content style={{ margin: "0 16px" }}>
-          {/* <Breadcrumb style={{ margin: "16px 0" }}>
+            {/* <Breadcrumb style={{ margin: "16px 0" }}>
             <Breadcrumb.Item>数据统计</Breadcrumb.Item>
           </Breadcrumb> */}
-          <div
-            className="site-layout-background"
-            style={{ padding: 24, minHeight: 360 }}
-          >
-            <ChartPage/>
-          </div>
-        </Content>
+            <div
+              className="site-layout-background"
+              style={{ padding: 24, minHeight: 360 }}
+            >
+              <ChartPage />
+            </div>
+          </Content>
         )}
         {content === 8 && (
           <Content style={{ margin: "0 16px" }}>
-          
-          <div
-            className="site-layout-background"
-            style={{ padding: 24, minHeight: 360 }}
-          >
-           <Contact/>
-          </div>
-        </Content>
+            <div
+              className="site-layout-background"
+              style={{ padding: 24, minHeight: 360 }}
+            >
+              <Contact />
+            </div>
+          </Content>
         )}
 
         <Footer style={{ textAlign: "center" }}>
@@ -166,7 +171,6 @@ function SiderLayout() {
     </Layout>
   );
 }
-
 
 ReactDOM.render(
   <Router>

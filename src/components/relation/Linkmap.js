@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import opicon from '../../img/op.png'
+import opicon from "../../img/op.png";
 import {
   Select,
   Button,
@@ -27,7 +27,7 @@ function LinkMap() {
   const [mylayer, setLayer] = useState(null);
   const [markers, setmarkers] = useState([]);
   const [markLayer, setmarkLayer] = useState(null);
-  const [avatarLayer, setavatarLayer] = useState(null)
+  const [avatarLayer, setavatarLayer] = useState(null);
 
   useEffect(() => {
     const map = new AMap.Map("mapBox", {
@@ -67,7 +67,7 @@ function LinkMap() {
       animation: true,
     });
     setmarkLayer(markerLayer);
-    setavatarLayer(new AMap.Object3DLayer())
+    setavatarLayer(new AMap.Object3DLayer());
     setLayer(new AMap.Object3DLayer());
     setMap(map);
   }, []);
@@ -148,32 +148,36 @@ function LinkMap() {
   }
 
   //绘制人物头像
-  function avatar(name,map){
-    mymap.add(avatarLayer)
-    var point3D = new AMap.Object3D.Points()
-    point3D.transparent = true
-    point3D.borderColor = [0.6,0.8,1,1]
-    point3D.borderWeight = 3
-    var geometry = point3D.geometry
-    var center = LnglatToG20(beijing)
-    geometry.vertices.push(center.x,center.y,-55000)
-    geometry.pointSizes.push(80)
-    // point3D.textures.push('http://hanhan.run/mc_img/lx.png');
-    point3D.textures.push('https://a.amap.com/jsapi_demos/static/demo-center/3d_texture_cctv_256.png')
+  function avatar(name, map) {
+    mymap.add(avatarLayer);
+    var point3D = new AMap.Object3D.Points();
+    point3D.transparent = true;
+    point3D.borderColor = [0.6, 0.8, 1, 1];
+    point3D.borderWeight = 3;
+    var geometry = point3D.geometry;
+    var center = LnglatToG20(beijing);
+    geometry.vertices.push(center.x, center.y, -55000);
+    geometry.pointSizes.push(80);
+    // 设置纹理贴图，数组中可以放入图片 url 和 canvas 对象，图片要符合宽高为 2的N次方 * 2的N次方个像素。
+    // 纹理个数最多为8个，如果超出8个需要自行使用 CSS sprites 技术整合图片，并通过 vertexUVs 定位图片位置
+    point3D.textures.push("https://hanhan.run/mc_img/3d_texture_cctv_256.png");
+    // point3D.textures.push("https://picsum.photos/256");
+    // point3D.textures
+    //   .push
+    //   // "https://a.amap.com/jsapi_demos/static/demo-center/3d_texture_cctv_256.png"
+    //   ();
     geometry.pointAreas.push(0, 0, 1, 1);
     // 每两个元素描述一个顶点的纹理坐标信息，纹理坐标以图片左上角为原点。分别是左上角和右下角。
     geometry.vertexUVs.push(0, 0, 1, 1);
-    avatarLayer.add(point3D)
-
+    avatarLayer.add(point3D);
   }
 
-
   //坐标转换
-  function LnglatToG20(lnglat){
-    lnglat = mymap.lngLatToGeodeticCoord(lnglat)
-    lnglat.x = AMap.Util.format(lnglat.x,3)
-    lnglat.y = AMap.Util.format(lnglat.y,3)
-    return lnglat
+  function LnglatToG20(lnglat) {
+    lnglat = mymap.lngLatToGeodeticCoord(lnglat);
+    lnglat.x = AMap.Util.format(lnglat.x, 3);
+    lnglat.y = AMap.Util.format(lnglat.y, 3);
+    return lnglat;
   }
 
   //遍历、绘制3D线
@@ -184,7 +188,7 @@ function LinkMap() {
       Idata[0].end.properties.long * 1,
       Idata[0].end.properties.lat * 1,
     ];
-    
+
     for (let i = 0; i < Idata.length; i++) {
       let Mlng = Idata[i].end.properties.long * 1;
       let Mlat = Idata[i].end.properties.lat * 1;
@@ -271,14 +275,13 @@ function LinkMap() {
         style={{ width: 200 }}
         onChange={handleChange}
       >
-       
         {man.map((person) => (
           <Option key={person.n.identity} value={person.n.properties.name}>
             {person.n.properties.name}
           </Option>
         ))}
       </Select>
-      <button onClick={()=>avatar()}>set</button>
+      <button onClick={() => avatar()}>set</button>
       <div id="mapBox" ref={refmap}></div>
     </div>
   );
