@@ -101,16 +101,20 @@ function AllRelation() {
   }
   return (
     <div>
+      <div style={{marginBottom:"15px"}}>
       <Switch
         checkedChildren="开启鱼眼"
         unCheckedChildren="关闭鱼眼"
         onChange={(e) => setFish(e)}
+        style={{marginRight:'15px'}}
       />
       <Switch
         checkedChildren="显示信息"
         unCheckedChildren="隐藏信息"
         onChange={(e) => setTip(e)}
       />
+      </div>
+     
       <div id="mapBox">
         <Graphin data={alldata} layout={{ type: "gForce" }}>
           <ActivateRelations />

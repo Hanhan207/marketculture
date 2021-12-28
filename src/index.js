@@ -72,9 +72,9 @@ function SiderLayout() {
             <Menu.Item key="3" onClick={() => setContent(3)}>
               关联分析
             </Menu.Item>
-            <Menu.Item key="5" onClick={() => setContent(5)}>
+            {/* <Menu.Item key="5" onClick={() => setContent(5)}>
              中心性分析
-            </Menu.Item>
+            </Menu.Item> */}
           </SubMenu>
           <Menu.Item key="4" icon={<BarChartOutlined />} onClick={() => setContent(4)}>
             数据统计

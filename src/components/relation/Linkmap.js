@@ -158,8 +158,9 @@ function LinkMap() {
     var center = LnglatToG20(beijing)
     geometry.vertices.push(center.x,center.y,-55000)
     geometry.pointSizes.push(80)
-    // point3D.textures.push('http://hanhan.run/mc_img/lx.png');
-    point3D.textures.push('https://a.amap.com/jsapi_demos/static/demo-center/3d_texture_cctv_256.png')
+    point3D.textures.push('https://hanhan.run/mc_img/lx256.png');
+    // point3D.textures.push('https://picsum.photos/256')
+    // point3D.textures.push('https://a.amap.com/jsapi_demos/static/demo-center/3d_texture_cctv_256.png')
     geometry.pointAreas.push(0, 0, 1, 1);
     // 每两个元素描述一个顶点的纹理坐标信息，纹理坐标以图片左上角为原点。分别是左上角和右下角。
     geometry.vertexUVs.push(0, 0, 1, 1);

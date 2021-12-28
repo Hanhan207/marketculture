@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./charts.css";
 import { Pie } from "@antv/g2plot";
-import { getInfo as IgetInfo, getMan as IgetPerson } from "../../api/Ineo4j";
+import {
+  getInfo as IgetInfo,
+  getMan as IgetPerson,
+  getManSomePlace as IgetManSomePlace,
+} from "../../api/Ineo4j";
 
 import CardContent from "./ChartCard";
 
@@ -55,7 +59,7 @@ const mockCharts = [
 var checked = [];
 var Infos = [];
 
-var mychecklist = []
+var mychecklist = [];
 
 function setContent(e) {
   switch (e) {
@@ -78,37 +82,36 @@ function StepOne() {
   const [checklist, setchecklist] = useState([
     {
       title: "人物",
-      type:'man',
+      type: "man",
       checked: false,
     },
     {
       title: "地标",
-      type:'db',
+      type: "db",
       checked: false,
     },
     {
       title: "戏院",
-      type:'op',
+      type: "op",
       checked: false,
     },
     {
       title: "胡同",
-      type:'ht',
+      type: "ht",
       checked: false,
     },
     {
       title: "老字号",
-      type:'thb',
+      type: "thb",
       checked: false,
     },
   ]);
 
   function onChange(index) {
-    console.log(index);
-    let data = [...checklist]
+    let data = [...checklist];
     data[index].checked = !data[index].checked;
-    mychecklist = data
-    setchecklist(data)
+    mychecklist = data;
+    setchecklist(data);
   }
 
   return (
@@ -118,10 +121,10 @@ function StepOne() {
         gutter: 16,
         xs: 1,
         sm: 2,
-        md: 4,
-        lg: 4,
+        md: 5,
+        lg: 5,
         xl: 6,
-        xxl: 3,
+        xxl: 5,
       }}
       dataSource={checklist}
       renderItem={(item, index) => (
@@ -130,11 +133,20 @@ function StepOne() {
             hoverable="true"
             bordered={item.checked}
             key={index}
-            className={item.checked ? "check" : "uncheck"}
+            // className={item.checked ? "check" : "uncheck"}
             title={item.title}
             onClick={(e) => onChange(index)}
+            // cover={
+             
+            // }
           >
-             <pre>{JSON.stringify(item.checked, null, 2)}</pre>
+             <img
+             style={{width:'100%',filter:item.checked?'grayscale(0%)':"grayscale(100%)",transition:'all .6s ease-in'}}
+                alt="card"
+                // src={require(`../../img/${item.type}_card.png`).default}
+                src="https://picsum.photos/500/500"
+              />
+            {/* <pre>{JSON.stringify(item.checked, null, 2)}</pre> */}
           </Card>
         </List.Item>
       )}
@@ -166,6 +178,10 @@ function StepTwo() {
         break;
       case "thb":
         chartdata.push({
+          title: "老字号数值图",
+          data: Infos[i].data,
+        });
+        chartdata.push({
           title: "老字号分布图",
           data: Infos[i].data,
         });
@@ -173,6 +189,24 @@ function StepTwo() {
       case "db":
         chartdata.push({
           title: "地标类型",
+          data: Infos[i].data,
+        });
+        break;
+      case "ManTothb":
+        chartdata.push({
+          title: "人物-老字号关系图",
+          data: Infos[i].data,
+        });
+        break;
+      case "ManToop":
+        chartdata.push({
+          title: "人物-剧院关系图",
+          data: Infos[i].data,
+        });
+        break;
+      case "ManToht":
+        chartdata.push({
+          title: "人物-胡同关系图",
           data: Infos[i].data,
         });
         break;
@@ -214,23 +248,27 @@ function ChartPage() {
   };
 
   async function getData() {
-    console.log(mychecklist)
     if (mychecklist.length) {
-      for (var i = 0; i < mychecklist.length && mychecklist[i].checked; i++) {
-        if (mychecklist[i].type === "man") {
-          await IgetPerson().then((res) => {
-            Infos.push({
-              title: "man",
-              data: res,
-            });
-          });
-        } else {
+      for (var i = 0; i < mychecklist.length; i++) {
+        if (mychecklist[i].checked) {
           await IgetInfo(mychecklist[i].type).then((res) => {
             Infos.push({
-              title: res.type,
+              title: mychecklist[i].type,
               data: res,
             });
           });
+        }
+      }
+      if (mychecklist[0].checked) {
+        for (var i = 1; i < mychecklist.length; i++) {
+          if (mychecklist[i].checked && mychecklist[i].type != "db") {
+            await IgetManSomePlace(mychecklist[i].type).then((res) => {
+              Infos.push({
+                title: "ManTo" + mychecklist[i].type,
+                data: res,
+              });
+            });
+          }
         }
       }
       setcurrent(1);
