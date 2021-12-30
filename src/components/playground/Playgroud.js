@@ -41,7 +41,7 @@ function Playground() {
         <div className="child"></div>
         <div className="wrapper-bg" style={{}}></div>
       </div>
-      <Tilt
+      {/* <Tilt
         className="parallax-effect-glare-scale"
         perspective={500}
         glareEnable={true}
@@ -53,7 +53,7 @@ function Playground() {
           <div>Parallax Tilt</div>
           <div>👀</div>
         </div>
-      </Tilt>
+      </Tilt> */}
       <NavLink to="/">To LandPage</NavLink>
 
     </div>
