@@ -10,47 +10,27 @@ import Tilt from "react-parallax-tilt";
 import { Parallax } from "rc-scroll-anim";
 import ScrollAnim from "rc-scroll-anim";
 
-const data = [
-  { year: "1991", value: 3 },
-  { year: "1992", value: 4 },
-  { year: "1993", value: 3.5 },
-  { year: "1994", value: 5 },
-  { year: "1995", value: 4.9 },
-  { year: "1996", value: 6 },
-  { year: "1997", value: 7 },
-  { year: "1998", value: 9 },
-  { year: "1999", value: 13 },
-];
+import p1 from "../../img/p1/P1_1.png";
+import p2 from "../../img/p1/P1_2.png";
+import p3 from "../../img/p1/P1_3.png";
+import p4 from "../../img/p1/P1_4.png";
+
 function Playground() {
-  useEffect(() => {
-    const line = new Line("container", {
-      data,
-      xField: "year",
-      yField: "value",
-    });
-
-    line.render();
-  }, []);
-
   return (
     <div>
-      <div id="container"></div>
-      <div className="father">
-        <div className="child"></div>
-        <div className="wrapper-bg" style={{}}></div>
-      </div>
       <Tilt
-        className="parallax-effect-glare-scale"
-        perspective={500}
-        glareEnable={true}
-        glareMaxOpacity={0.45}
-        scale={1.02}
+        className="parallax-effect-img"
+        tiltMaxAngleX={10}
+        tiltMaxAngleY={10}
+        perspective={800}
+        transitionSpeed={150}
+        // scale={1.1}
+        gyroscope={true}
       >
-        <div className="inner-element">
-          <div>React</div>
-          <div>Parallax Tilt</div>
-          <div>👀</div>
-        </div>
+        <img src={p4} className="inner p4" alt="pic" />
+        <img src={p1} className="inner p1" alt="pic" />
+        <img src={p2} className="inner p1" alt="pic" />
+        <img src={p3} className="inner p1" alt="pic" />
       </Tilt>
       <NavLink to="/">To LandPage</NavLink>
       <img
