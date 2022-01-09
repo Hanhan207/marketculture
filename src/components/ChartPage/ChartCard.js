@@ -1,4 +1,4 @@
-import { Pie, Column } from "@antv/g2plot";
+import { Pie, Column,Scatter } from "@antv/g2plot";
 import React, { useEffect, useState } from "react";
 import Graphin, { Behaviors, Utils, GraphinContext } from "@antv/graphin";
 import {
@@ -18,10 +18,14 @@ function CardContent(e) {
 
   return (
     <div id="nodeBox">
-      {type === "人物关系图" && <NodeMap data={chartdata} />}
-      {type === "老字号分布图" && <East index={index} />}
+      {type === "人物关系图" && <NodeMap data={chartdata} index={index}/>}
+      {type === "人物-胡同关系图" && <NodeMap data={chartdata} index={index}/>}
+      {type === "人物-老字号关系图" && <NodeMap data={chartdata} index={index}/>}
+      {type === "人物-剧院关系图" && <NodeMap data={chartdata} index={index}/>}
+      {type === "胡同分布图" && <East index={index} />}
+      {type === '老字号分布图' && <East index={index}/>}
       {type === "地标类型" && <DbType />}
-      {type === "胡同分布图" && <div>胡同分布图</div>}
+      {type === "老字号数值图" && <ThbScatter data={chartdata}/>}
       {type === "剧院分布图" && <div>剧院分布图</div>}
       {/* <pre>{JSON.stringify(chartdata, null, 2)}</pre> */}
       {/* */}
@@ -32,6 +36,7 @@ function CardContent(e) {
 //人物关系图
 function NodeMap(e) {
   var data = e.data;
+  var index = e.index
   const [node, setnode] = useState([]);
   useEffect(() => {
     setnode({ nodes: setnodes(data.nodes), edges: setedges(data.edges) });
@@ -40,6 +45,7 @@ function NodeMap(e) {
   //设置点样式
   function setnodes(nodes) {
     var themecolor = "rgba(72, 83, 159, 1)";
+    console.log(nodes)
     nodes.forEach((node) => {
       let mykeyshape = {
         size: 30,
@@ -52,11 +58,10 @@ function NodeMap(e) {
         // 节点的主要形状，即圆形容器，可以在这里设置节点的大小，border，填充色
         keyshape: mykeyshape,
         label: {
-          value: node.properties.name,
+          value:node.labels === 'man' ? node.properties.name : node.properties[`${node.labels}_name`],
         },
       };
     });
-    console.log(nodes);
     return nodes;
   }
 
@@ -72,15 +77,13 @@ function NodeMap(e) {
     return edges;
   }
   return (
-    <div id="nodeBox">
       <Graphin
-        style={{ width: "100%" }}
         data={node}
+        style={{width:'480px'}}
         layout={{ type: "gForce" }}
       >
         <ActivateRelations />
       </Graphin>
-    </div>
   );
 }
 //东西城分布图
@@ -180,6 +183,38 @@ function DbType() {
   }, []);
 
   return <div id="db_type"></div>;
+}
+
+//老字号气泡散点图
+function ThbScatter(params) {
+  var mydata = params.data.data
+  var thbdata= []
+  mydata.forEach(item => {
+    thbdata.push({
+      title:item.properties.thb_name,
+      year:parseInt(item.properties.thb_creation_time),
+      value:item.properties.value*1,
+      type:item.properties.thb_industry,
+      shopnumber:item.properties.value_number*1
+    })
+  });
+  useEffect(() => {
+    const scatterPlot = new Scatter('thbscatter', {
+      data:thbdata,
+      xField: 'year',
+      yField: 'value',
+      colorField: 'type',
+      sizeField: 'shopnumber',
+      size: [4, 15],
+      shape: 'circle',
+      
+    });
+    scatterPlot.render();
+  }, [])
+
+  return (
+    <div id="thbscatter"></div>
+  )
 }
 
 export default CardContent;

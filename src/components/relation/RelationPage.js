@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { Button, Switch, Divider, message, Card, Image, Tabs } from "antd";
 
 import {
-  getManLhb as IgetRelation,
   getPerson as IgetPerson,
 } from "../../api/Ineo4j";
 

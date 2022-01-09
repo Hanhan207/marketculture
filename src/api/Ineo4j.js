@@ -29,44 +29,33 @@ function getCenter(input) {
     });
 }
 
-//获取人和老字号关系数据
-function getManLhb(input) {
+
+//获取人和某类地点关系数据
+function getManSomePlace(place) {
   var session = driver.session();
+  var nodes = []
+  var edges = []
   var myData = [];
   return session
-    .run("MATCH (m:man)-[r:去过]->(t:thb) RETURN m, r, t", {})
+    .run(`MATCH (m:man)-[r]->(n:${place}) RETURN m, r, n`, {})
     .then((result) => {
       result.records.forEach((record) => {
-        let node = {
-          start: record.get("m"),
-          real: record.get("r"),
-          end: record.get("t"),
-        };
-        myData.push(node);
-      });
-    })
-    .catch((error) => {})
-    .then(() => {
-      session.close();
-
-      return myData;
-    });
-}
-
-//获取人和胡同关系数据
-function getManHt(input) {
-  var session = driver.session();
-  var myData = [];
-  return session
-    .run("MATCH (m:man)-[r:去过]->(h:hb) RETURN m, r, h", {})
-    .then((result) => {
-      result.records.forEach((record) => {
-        let node = {
-          start: record.get("m"),
-          real: record.get("r"),
-          end: record.get("h"),
-        };
-        myData.push(node);
+        edges.push({
+          source: record.get("r").start.low + "",
+          target: record.get("r").end.low + "",
+          properties: record.get("r").properties,
+        });
+        nodes.push({
+          id:record.get("m").identity.low+ "",
+          labels:record.get("m").labels[0],
+          properties:record.get("m").properties
+        }
+          );
+        nodes.push({
+          id:record.get("n").identity.low+ "",
+          labels:record.get("n").labels[0],
+          properties:record.get("n").properties
+        });
       });
     })
     .catch((error) => {
@@ -74,11 +63,12 @@ function getManHt(input) {
     })
     .then(() => {
       session.close();
+      let myData = { nodes: quchongAll(nodes), edges: edges };
       return myData;
     });
 }
 
-//获取人和地点关系
+//获取某人和地点关系
 function getManPlace(man, place) {
   var session = driver.session();
   var myData = [];
@@ -174,12 +164,11 @@ function getHeatAll() {
     });
 }
 
-//获取人物关系
+//获取所有人物关系
 function getPerson() {
   var session = driver.session();
   var nodes = [];
   var edges = [];
-
   return session
     .run("MATCH (m:man)-[r:相关]->(n:man) RETURN m, r, n")
     .then((result) => {
@@ -241,7 +230,7 @@ function getAll(){
     });
 }
 
-//查询整个数据库
+//查询所有人物关系
 function getMan(){
   var session = driver.session();
   var nodes = [];
@@ -249,7 +238,6 @@ function getMan(){
   return session
     .run("MATCH (m:man)-[r]-(n:man) RETURN m,r,n")
     .then((result) => {
-      
       result.records.forEach((record) => {
         edges.push({
           source: record.get("r").start.low + "",
@@ -304,7 +292,39 @@ function getInfo(type){
   }
   var nodes = [];
   var edges = [];
-  return session
+  if(type === 'man'){
+    return session
+    .run("MATCH (m:man)-[r]-(n:man) RETURN m,r,n")
+    .then((result) => {
+      result.records.forEach((record) => {
+        edges.push({
+          source: record.get("r").start.low + "",
+          target: record.get("r").end.low + "",
+          properties: record.get("r").properties,
+        });
+        nodes.push({
+          id:record.get("m").identity.low+ "",
+          labels:record.get("m").labels[0],
+          properties:record.get("m").properties
+        }
+          );
+        nodes.push({
+          id:record.get("n").identity.low+ "",
+          labels:record.get("n").labels[0],
+          properties:record.get("n").properties
+        });
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+    .then(() => {
+      session.close();
+      let myData = { nodes: quchongAll(nodes), edges: edges };
+      return myData;
+    });
+  }else{
+    return session
     .run(`MATCH (m:${type}) RETURN m`)
     .then((result) => {
       result.records.forEach((record) => {
@@ -319,13 +339,14 @@ function getInfo(type){
       // let myData = { nodes: quchongAll(nodes), edges: edges };
       return myData;
     });
+  }
+  
 }
 
 
 export {
   getCenter,
   getSpace,
-  getManLhb,
   getHeat,
   getHeatAll,
   getPerson,
@@ -333,4 +354,5 @@ export {
   getAll,
   getInfo,
   getMan,
+  getManSomePlace
 };

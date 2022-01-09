@@ -148,6 +148,7 @@ function LinkMap() {
   }
 
   //绘制人物头像
+
   function avatar(name, map) {
     mymap.add(avatarLayer);
     var point3D = new AMap.Object3D.Points();
@@ -158,14 +159,10 @@ function LinkMap() {
     var center = LnglatToG20(beijing);
     geometry.vertices.push(center.x, center.y, -55000);
     geometry.pointSizes.push(80);
-    // 设置纹理贴图，数组中可以放入图片 url 和 canvas 对象，图片要符合宽高为 2的N次方 * 2的N次方个像素。
-    // 纹理个数最多为8个，如果超出8个需要自行使用 CSS sprites 技术整合图片，并通过 vertexUVs 定位图片位置
-    point3D.textures.push("https://hanhan.run/mc_img/3d_texture_cctv_256.png");
-    // point3D.textures.push("https://picsum.photos/256");
-    // point3D.textures
-    //   .push
-    //   // "https://a.amap.com/jsapi_demos/static/demo-center/3d_texture_cctv_256.png"
-    //   ();
+    point3D.textures.push("https://hanhan.run/mc_img/lx256.png");
+    // point3D.textures.push('https://picsum.photos/256')
+    // point3D.textures.push('https://a.amap.com/jsapi_demos/static/demo-center/3d_texture_cctv_256.png')
+
     geometry.pointAreas.push(0, 0, 1, 1);
     // 每两个元素描述一个顶点的纹理坐标信息，纹理坐标以图片左上角为原点。分别是左上角和右下角。
     geometry.vertexUVs.push(0, 0, 1, 1);
