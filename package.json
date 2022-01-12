@@ -26,7 +26,8 @@
     "react-parallax-tilt": "^1.5.83",
     "react-router-dom": "^6.1.0",
     "react-scripts": "4.0.3",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^1.0.1",
+    "yarn": "^1.22.17"
   },
   "scripts": {
     "start": "react-scripts start",
