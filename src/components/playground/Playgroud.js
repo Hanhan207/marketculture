@@ -4,7 +4,10 @@ import "./playground.css";
 
 import useLocoScroll from "../hooks/uesLocoScroll";
 import { gsap } from "gsap";
+import ScrollTrigger from "gsap/src/ScrollTrigger";
 import SplitText from "../../utils/Split3.min.js";
+import useOnScreen from "../hooks/useOnScreen";
+import cn from "classnames";
 
 import { Pie, Line } from "@antv/g2plot";
 
@@ -96,6 +99,12 @@ function Featured() {
         <h6 className="f6">lily</h6>
         <img
           className="fimg"
+          // style={{
+          //   clipPath: " inset(0% 0% 0% 0%)",
+          //   width: "100%",
+          //   objectFit: "cover",
+          //   transition: " clip-path 1s cubic-bezier(0.77,0,0.175,1)",
+          // }}
           src="https://picsum.photos/800/500"
           alt=""
           style={{ height: "125vh" }}
@@ -106,10 +115,32 @@ function Featured() {
 }
 
 function About() {
+  const ref = useRef();
+  const [reveal, setReveal] = useState(false);
+  const onScreen = useOnScreen(ref);
+  useEffect(() => {
+    if (onScreen) setReveal(onScreen);
+  }, [onScreen]);
+  useEffect(() => {
+    if (reveal) {
+      const split = new SplitText("#headline", {
+        type: "lines",
+        // linesClass: "lineChildren",
+      });
+
+      gsap.to(split.lines, {
+        duration: 2,
+        y: -20,
+        opacity: 1,
+        stagger: 0.1,
+        ease: "power4.out",
+      });
+    }
+  }, [reveal]);
   return (
     <section className={"about-section"} data-scroll-section>
       <SectionHeader title={"about"} />
-      <p id="headline">
+      <p id="headline" ref={ref} className={cn({ "is-reveal": reveal })}>
         Your websites and tutorials are awesome and easy to understand!! Just
         one suggestion though... If possible, please try to add timestamps so
         that it's easier to keep a track of at what time will you be working on
@@ -127,8 +158,18 @@ function GalleryItem({
   updateActiveImage,
   index,
 }) {
+  const ref = useRef(null);
+  const onScreen = useOnScreen(ref, 0.5);
+  useEffect(() => {
+    if (onScreen) {
+      updateActiveImage(index);
+    }
+  }, [onScreen, index]);
   return (
-    <div className="gallery-item-wrapper">
+    <div
+      className={cn("gallery-item-wrapper", { "is-reveal": onScreen })}
+      ref={ref}
+    >
       <div />
       <div className="gallery-item">
         <div className="gallery-item-info">
@@ -145,53 +186,78 @@ function GalleryItem({
     </div>
   );
 }
-function Gallery() {
+
+function Gallery({ src, index, columOffset }) {
   const [activeImage, setActiveImage] = useState(1);
+  const ref = useRef(null);
+  useEffect(() => {
+    setTimeout(() => {
+      let sections = gsap.utils.toArray(".gallery-item-wrapper");
+      gsap.to(sections, {
+        xPercent: -100 * (sections.length - 1),
+        ease: "none",
+        scrollTrigger: {
+          start: "top top",
+          trigger: ref.current,
+          scroll: "#main-container",
+          pin: true,
+          scrub: 0.5,
+          span: 1 / (sections.length - 1),
+          end: () => `+=${ref.current.offsetWidth}`,
+        },
+      });
+      ScrollTrigger.refresh();
+    });
+  }, []);
+
+  const handleUpdateActiveImage = (index) => {
+    setActiveImage(index + 1);
+  };
   return (
     <section
-      className={"gallery-section"}
+      data-scroll-section
+      className={"gallery-section gallery-wrap"}
       style={{
         backgroundColor: "#d53f41",
         marginLeft: "-5vw",
         marginRight: "-5vw",
       }}
-      data-scroll-section
     >
-      <div
-        className="gallery-counter"
-        style={{
-          postion: "absolute",
-          top: "10%",
-          left: "100px",
-          zIndex: "1",
-          mixBlendMode: "difference",
-          lineHeight: "16px",
-          color: "#dbd8d6",
-          fontSize: "16px",
-          fontWeight: "600",
-          display: "inline-block",
-        }}
-      >
-        <span>{activeImage}</span>
-        <span
+      <div className="gallery" ref={ref}>
+        <div
+          className="gallery-counter"
           style={{
-            content: "",
-            backgroundColor: "white",
-            width: "6.25vw",
-            margin: "7px 10px",
-            height: "1px",
+            postion: "absolute",
+            top: "10%",
+            left: "100px",
+            zIndex: "1",
+            mixBlendMode: "difference",
+            lineHeight: "16px",
+            color: "#dbd8d6",
+            fontSize: "16px",
+            fontWeight: "600",
             display: "inline-block",
           }}
-        ></span>
-        <span>{images.length}</span>
-      </div>
-      <div className="gallery">
+        >
+          <span>{activeImage}</span>
+          <span
+            style={{
+              content: "",
+              backgroundColor: "white",
+              width: "6.25vw",
+              margin: "7px 10px",
+              height: "1px",
+              display: "inline-block",
+            }}
+          ></span>
+          <span>{images.length}</span>
+        </div>
         {images.map((image, index) => (
           <GalleryItem
             key={image.src}
             index={index}
             {...image}
-            updateActiveImage={(index) => setActiveImage(index + 1)}
+            updateActiveImage={handleUpdateActiveImage}
           />
         ))}
       </div>
@@ -200,6 +266,32 @@ function Gallery() {
 }
 
 function Footer() {
+  const ref = useRef();
+  const [reveal, setReveal] = useState(false);
+  const onScreen = useOnScreen(ref);
+  useEffect(() => {
+    if (onScreen) setReveal(onScreen);
+  }, [onScreen]);
+  useEffect(() => {
+    if (reveal) {
+      const split = new SplitText("#location", {
+        type: "lines",
+        linesClass: "lineChildren2",
+      });
+
+      const splitParent = new SplitText("#location", {
+        type: "lines",
+        linesClass: "lineParent",
+      });
+      gsap.to(split.lines, {
+        duration: 1,
+        y: 0,
+        opacity: 1,
+        stagger: 0.1,
+        ease: "power2",
+      });
+    }
+  }, [reveal]);
   return (
     <section
       className={"footer-section"}
@@ -207,7 +299,12 @@ function Footer() {
       data-scroll-section
     >
       <SectionHeader title={"Made in"} />
-      <h1 className="location" style={{ fontSize: "18vw", lineHeight: "15vw" }}>
+      <h1
+        className={cn({ "is-reveal": reveal })}
+        id="location"
+        // style={{  }}
+        ref={ref}
+      >
         Bupt and Hanyuxin
       </h1>
     </section>

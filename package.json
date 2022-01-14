@@ -15,6 +15,7 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "antd": "^4.16.13",
+    "classnames": "^2.3.1",
     "gasp": "^0.0.2",
     "gsap": "^3.9.1",
     "locomotive-scroll": "^4.1.3",
