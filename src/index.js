@@ -9,6 +9,7 @@ import Playground from "./components/playground/Playgroud";
 import SpaceMap from "./components/SpaceMap";
 import ChartPage from "./components/ChartPage/ChartPage";
 import Contact from "./components/Contact";
+import FiberEl from "./components/FiberEl/FiberEl";
 
 //antd 组件库
 import { Button, Divider, message, Card, Image, Tabs } from "antd";
