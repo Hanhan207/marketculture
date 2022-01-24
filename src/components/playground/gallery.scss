@@ -56,7 +56,7 @@
         line-height: 6vw;
         // font-family: "Bai Jamjuree";
         font-weight: 600;
-        
+        color: white;
         font-size: 6vw;
         -webkit-font-smoothing: antialiased;
       }
@@ -67,7 +67,7 @@
         // color: transparent;
         // font-family: "Bodoni Moda";
         font-weight: 400;
-        color: white;
+        color: black;
         font-size: 1.5vw;
         -webkit-font-smoothing: antialiased;
         // -webkit-text-stroke: 1px #dbd8d6;
@@ -87,6 +87,7 @@
       }
     }
     .gallery-item-wrapper {
+      // padding: 100px 0;
       aspect-ratio: 16/9;
       height: 100%;
       display: grid;

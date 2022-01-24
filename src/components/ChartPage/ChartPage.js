@@ -84,26 +84,31 @@ function StepOne() {
       title: "人物",
       type: "man",
       checked: false,
+      src: require(`../../img/man.png`).default,
     },
     {
       title: "地标",
       type: "db",
       checked: false,
+      src: require(`../../img/park.jpg`).default,
     },
     {
       title: "戏院",
       type: "op",
       checked: false,
+      src: require(`../../img/opera.jpg`).default,
     },
     {
       title: "胡同",
       type: "ht",
       checked: false,
+      src: require(`../../img/hutong.jpg`).default,
     },
     {
       title: "老字号",
       type: "thb",
       checked: false,
+      src: require(`../../img/thb.jpg`).default,
     },
   ]);
 
@@ -136,17 +141,19 @@ function StepOne() {
             // className={item.checked ? "check" : "uncheck"}
             title={item.title}
             onClick={(e) => onChange(index)}
-            // cover={
-             
-            // }
           >
-             <img
-             style={{width:'100%',filter:item.checked?'grayscale(0%)':"grayscale(100%)",transition:'all .6s ease-in'}}
-                alt="card"
-                // src={require(`../../img/${item.type}_card.png`).default}
-                src="https://picsum.photos/500/500"
-              />
-            {/* <pre>{JSON.stringify(item.checked, null, 2)}</pre> */}
+            <img
+              style={{
+                // width: "100%",
+                height: "30vh",
+                width: "30vh",
+                objectFit: "cover",
+                filter: item.checked ? "grayscale(0%)" : "grayscale(100%)",
+                transition: "all .6s ease-in",
+              }}
+              alt="card"
+              src={item.src}
+            />
           </Card>
         </List.Item>
       )}
@@ -166,7 +173,7 @@ function StepTwo() {
         break;
       case "op":
         chartdata.push({
-          title: "剧院分布图",
+          title: "剧院年份图",
           data: Infos[i].data,
         });
         break;

@@ -92,12 +92,12 @@ body {
 .main-container {
   padding: 0 5vw;
 }
-section {
-  padding: 100px 0;
-}
-.section-header {
-  margin-bottom: 50px;
-}
+
+// section {
+//   padding: 100px 0;
+// }
+
+
 .navbar {
   display: flex;
   flex-direction: row;
@@ -107,6 +107,7 @@ section {
   letter-spacing: 1px;
 }
 .header-section {
+  padding: 100px 0;
   position: relative;
 }
 .header-menu {
@@ -141,6 +142,7 @@ section {
 }
 
 .featured-section {
+  padding: 100px 0;
   display: grid;
   grid-template-columns: 1fr 3fr;
   align-items: center;
@@ -191,9 +193,10 @@ section {
 }
 
 .about-section {
+  padding: 100px 0;
   p {
     font-size: 70px;
-    line-height: 1.12;
+    line-height: 1.3;
     opacity: 0;
 
     > div {
@@ -205,6 +208,17 @@ section {
     }
   }
 }
+.about-section-name{
+  display: inline-block;
+  color: red;
+}
+.about-section-img{
+  position: absolute;
+  right: 5vw;
+  top: 15vh;
+  width: 30vw;
+}
+
 
 
 

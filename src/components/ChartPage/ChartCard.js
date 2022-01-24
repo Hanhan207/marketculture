@@ -1,5 +1,5 @@
-import { Pie, Column,Scatter } from "@antv/g2plot";
-import React, { useEffect, useState } from "react";
+import { Pie, Column, Scatter } from "@antv/g2plot";
+import React, { useEffect, useState, useRef } from "react";
 import Graphin, { Behaviors, Utils, GraphinContext } from "@antv/graphin";
 import {
   Statistic as NewStat,
@@ -8,6 +8,8 @@ import {
   FishEye,
   Legend,
 } from "@antv/graphin-components";
+
+import toDataURL from "../../api/toimg";
 const { DragCanvas, ZoomCanvas, DragNode, ActivateRelations } = Behaviors;
 
 function CardContent(e) {
@@ -18,15 +20,18 @@ function CardContent(e) {
 
   return (
     <div id="nodeBox">
-      {type === "人物关系图" && <NodeMap data={chartdata} index={index}/>}
-      {type === "人物-胡同关系图" && <NodeMap data={chartdata} index={index}/>}
-      {type === "人物-老字号关系图" && <NodeMap data={chartdata} index={index}/>}
-      {type === "人物-剧院关系图" && <NodeMap data={chartdata} index={index}/>}
+      {/* <button onClick={() => toimg()}>生产图片</button> */}
+      {type === "人物关系图" && <NodeMap data={chartdata} index={index} />}
+      {type === "人物-胡同关系图" && <NodeMap data={chartdata} index={index} />}
+      {type === "人物-老字号关系图" && (
+        <NodeMap data={chartdata} index={index} />
+      )}
+      {type === "人物-剧院关系图" && <NodeMap data={chartdata} index={index} />}
       {type === "胡同分布图" && <East index={index} />}
-      {type === '老字号分布图' && <East index={index}/>}
+      {type === "老字号分布图" && <East index={index} />}
       {type === "地标类型" && <DbType />}
-      {type === "老字号数值图" && <ThbScatter data={chartdata}/>}
-      {type === "剧院分布图" && <div>剧院分布图</div>}
+      {type === "老字号数值图" && <ThbScatter data={chartdata} />}
+      {type === "剧院年份图" && <OpInfo data={chartdata} />}
       {/* <pre>{JSON.stringify(chartdata, null, 2)}</pre> */}
       {/* */}
     </div>
@@ -36,8 +41,10 @@ function CardContent(e) {
 //人物关系图
 function NodeMap(e) {
   var data = e.data;
-  var index = e.index
+  var index = e.index;
   const [node, setnode] = useState([]);
+  const [chart, setChart] = useState(null);
+  const [dataURL, setDataURL] = useState(null);
   useEffect(() => {
     setnode({ nodes: setnodes(data.nodes), edges: setedges(data.edges) });
   }, []);
@@ -45,7 +52,7 @@ function NodeMap(e) {
   //设置点样式
   function setnodes(nodes) {
     var themecolor = "rgba(72, 83, 159, 1)";
-    console.log(nodes)
+    console.log(nodes);
     nodes.forEach((node) => {
       let mykeyshape = {
         size: 30,
@@ -58,7 +65,10 @@ function NodeMap(e) {
         // 节点的主要形状，即圆形容器，可以在这里设置节点的大小，border，填充色
         keyshape: mykeyshape,
         label: {
-          value:node.labels === 'man' ? node.properties.name : node.properties[`${node.labels}_name`],
+          value:
+            node.labels === "man"
+              ? node.properties.name
+              : node.properties[`${node.labels}_name`],
         },
       };
     });
@@ -77,13 +87,9 @@ function NodeMap(e) {
     return edges;
   }
   return (
-      <Graphin
-        data={node}
-        style={{width:'480px'}}
-        layout={{ type: "gForce" }}
-      >
-        <ActivateRelations />
-      </Graphin>
+    <Graphin data={node} style={{ width: "480px" }} layout={{ type: "gForce" }}>
+      <ActivateRelations />
+    </Graphin>
   );
 }
 //东西城分布图
@@ -187,34 +193,90 @@ function DbType() {
 
 //老字号气泡散点图
 function ThbScatter(params) {
-  var mydata = params.data.data
-  var thbdata= []
-  mydata.forEach(item => {
+  var mydata = params.data.data;
+  var thbdata = [];
+  mydata.forEach((item) => {
     thbdata.push({
-      title:item.properties.thb_name,
-      year:parseInt(item.properties.thb_creation_time),
-      value:item.properties.value*1,
-      type:item.properties.thb_industry,
-      shopnumber:item.properties.value_number*1
-    })
+      title: item.properties.thb_name,
+      year: parseInt(item.properties.thb_creation_time),
+      value: item.properties.value * 1,
+      type: item.properties.thb_industry,
+      shopnumber: item.properties.value_number * 1,
+    });
   });
   useEffect(() => {
-    const scatterPlot = new Scatter('thbscatter', {
-      data:thbdata,
-      xField: 'year',
-      yField: 'value',
-      colorField: 'type',
-      sizeField: 'shopnumber',
+    const scatterPlot = new Scatter("thbscatter", {
+      data: thbdata,
+      xField: "year",
+      yField: "value",
+      colorField: "type",
+      sizeField: "shopnumber",
       size: [4, 15],
-      shape: 'circle',
-      
+      shape: "circle",
     });
     scatterPlot.render();
-  }, [])
+  }, []);
 
+  return <div id="thbscatter"></div>;
+}
+
+//剧院分组柱形图
+function OpInfo(params) {
+  var mydata = params.data.data;
+  var opdata = [];
+  const [chart, setChart] = useState(null);
+  const [dataURL, setDataURL] = useState(null);
+  mydata.forEach((item) => {
+    opdata.push({
+      title: item.properties.op_name,
+      year: item.properties.op_time * 1,
+      person: item.properties.op_person * 1,
+      number: item.properties.op_number * 1,
+    });
+  });
+
+  useEffect(() => {
+    const stackedColumnPlot = new Column("opinfo", {
+      data: opdata,
+      isGroup: true,
+      xField: "title",
+      yField: "year",
+      // seriesField: "number",
+      /** 设置颜色 */
+      //color: ['#1ca9e6', '#f88c24'],
+      /** 设置间距 */
+      // marginRatio: 0.1,
+      label: {
+        // 可手动配置 label 数据标签位置
+        position: "middle", // 'top', 'middle', 'bottom'
+        // 可配置附加的布局方法
+        layout: [
+          // 柱形图数据标签位置自动调整
+          { type: "interval-adjust-position" },
+          // 数据标签防遮挡
+          { type: "interval-hide-overlap" },
+          // 数据标签文颜色自动调整
+          { type: "adjust-color" },
+        ],
+      },
+    });
+
+    stackedColumnPlot.render();
+    setChart(stackedColumnPlot.chart);
+  }, []);
+
+  function toimg() {
+    toDataURL(chart);
+    setDataURL(toDataURL(chart));
+    console.log("hello");
+  }
   return (
-    <div id="thbscatter"></div>
-  )
+    <div>
+      <button onClick={() => setDataURL(toDataURL(chart))}>hell </button>
+      <div id="opinfo"></div>
+      <img src={dataURL} alt="" />
+    </div>
+  );
 }
 
 export default CardContent;

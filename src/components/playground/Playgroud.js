@@ -25,33 +25,6 @@ import p4 from "../../img/p1/P1_4.png";
 
 import FiberEl from "../FiberEl/FiberEl";
 
-const images = [
-  {
-    src: "https://images.unsplash.com/photo-1566204773863-cf63e6d4ab88?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1345&q=100",
-    title: "Dracaena Trifasciata",
-    subtitle: "Live the Beauty",
-    category: "Shooting / Adv.Campaing",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1558603668-6570496b66f8?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1300&q=100",
-    title: "Cereus Penuvianus",
-    subtitle: "Live the Beauty",
-    category: "Shooting / Adv.Campaing",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1567225557594-88d73e55f2cb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=934&q=100",
-    title: "Calliope",
-    subtitle: "Live the Beauty",
-    category: "Shooting / Adv.Campaing",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1611145367651-6303b46e4040?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2006&q=100",
-    title: "Golden Pothos",
-    subtitle: "Living Room",
-    category: "Shooting / Adv.Campaing",
-  },
-];
-
 function SectionHeader({ title }) {
   return (
     <h6 style={{ fontWeight: "600", letterSpacing: "1px", fontSize: "30px" }}>
@@ -88,7 +61,7 @@ function Header() {
         <li>数据统计</li>
       </ul> */}
       <FiberEl />
-      <p className="header-menu">
+      <p className="header-menu" data-scroll data-scroll-speed={1.5}>
         市井一词，原指街市或市场，即城邑中集中买卖货物的场所。“市井”在宋代之前多是由市场围墙围合成的商业区域，并在空间中施以“井”制，以限定其空间范围，起到与“坊”相隔离的作用，以便于监管。唐末宋初，市井外围高墙自发的逐步瓦解，商业逐渐向临街店面的形式转变，与居住空间的联系日益紧密，所形成的商业和居住空间的这种混合方式对商户经营、居民生活更加便利。北宋时期开封(东京)的市井，经过由前朝(唐代)“仿里”向“街坊”的转变后，得到了飞速发展。
       </p>
       <h1 id="header-text">市井文化 可视分析</h1>
@@ -100,11 +73,16 @@ function Featured() {
   return (
     <section className={"featured-section"} data-scroll-section>
       <div className="feature-row-layout">
-        <h6>鲁迅在北京住过哪几个胡同？</h6>
+        <h6>
+          可以通过选择感兴趣的主题，查看相关主题下的可视分析图表并写下自己的洞察或评价，并经过分析平台再设计后生成可分享的海报，快来试一试吧！
+        </h6>
         <img src="https://picsum.photos/600/300" alt="" data-scroll />
       </div>
       <div className="feature-column-layout">
-        <h6>lily</h6>
+        <h6>
+          {" "}
+          <NavLink to="/">{"快来试一试吧——>"}</NavLink>
+        </h6>
         <img src="https://picsum.photos/800/500" data-scroll alt="" />
       </div>
     </section>
@@ -138,9 +116,16 @@ function About() {
     <section className={"about-section"} data-scroll-section>
       <SectionHeader title={"数据探索"} />
       <p id="headline" ref={ref} className={cn({ "is-reveal": reveal })}>
-        市井文化可视分析系统从传统文化爱好者的角度出发，设计了自定义数据统计功能。用户可以通过选择感兴趣的主题，查看相关主题下的可视分析图表并写下自己的洞察或评价，并经过分析平台再设计后生成可分享的海报，
-        <NavLink to="/">{"快来试一试吧——>"}</NavLink>
+        鲁迅在北京住过哪几个胡同？ 胡适最常去的老字号有哪些？
+        老舍写过多少北京的老地方？ 梅兰芳都在哪些剧院演出过？
       </p>
+      <img
+        className="about-section-img"
+        data-scroll
+        data-scroll-speed={2}
+        src={require("../../img/hutong.jpg").default}
+        alt=""
+      />
     </section>
   );
 }
@@ -174,13 +159,13 @@ function Footer() {
   }, [reveal]);
   return (
     <section className={"footer"} data-scroll-section>
-      <SectionHeader title={"Made in"} />
+      <SectionHeader title={"来吧来吧"} />
       <h1
         className={cn("location", { "is-reveal": reveal })}
         id="location-text"
         ref={ref}
       >
-        中华文化 博大精深
+        <NavLink to="/">{"进入系统 一探究竟"}</NavLink>
       </h1>
     </section>
   );

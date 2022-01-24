@@ -9,28 +9,32 @@ import "./gallery.scss";
 
 const images = [
   {
-    src: "https://images.unsplash.com/photo-1566204773863-cf63e6d4ab88?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1345&q=100",
+    src: require("../../img/hutong.jpg").default,
+    //src: "https://images.unsplash.com/photo-1566204773863-cf63e6d4ab88?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1345&q=100",
     title: "居住空间",
     subtitle: "北京胡同 四合院",
     category:
       "市井中的居住市井空间与外部商业空间形成鲜明的对比，鼎沸的表层商业市井内部呈现出静谧的居住市井，给人以别有洞天的感受。居住市井中常见流动的叫卖、三五成群的棋牌竞技，这种惬意的生活状态形式称了市井文化街区内部的一番独特景象。",
   },
   {
-    src: "https://images.unsplash.com/photo-1558603668-6570496b66f8?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1300&q=100",
+    src: require("../../img/thb.jpg").default,
+    //src: "https://images.unsplash.com/photo-1558603668-6570496b66f8?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1300&q=100",
     title: "商业空间",
     subtitle: "老字号",
     category:
       "“市”是伴随商品交换行为而形成的，“市”的独立为市井文化创造了生态环境。市井起源于商业活动，商业空间更是市井空间的核心组成部分，宋代前市井中的围墙商业区在唐末宋初逐渐瓦解，商业向临街店面的形式转变，商业空间也发生了变化。",
   },
   {
-    src: "https://images.unsplash.com/photo-1567225557594-88d73e55f2cb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=934&q=100",
+    src: require("../../img/opera.jpg").default,
+    //src: "https://images.unsplash.com/photo-1567225557594-88d73e55f2cb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=934&q=100",
     title: "娱乐空间",
     subtitle: "戏院 剧场",
     category:
       "市井中物质的繁荣为其文化载体的形成或确立创造了条件。丰富多彩的京瓦伎艺如雨后春笋涌现，不一而足。这些艺术本来就源于商业行为，也可以证市井文化载体商业化、职业化的过程，最能体现市井文化的特色，是商业性与娱乐性的巧妙统一。",
   },
   {
-    src: "https://images.unsplash.com/photo-1611145367651-6303b46e4040?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2006&q=100",
+    src: require("../../img/park.jpg").default,
+    //src: "https://images.unsplash.com/photo-1611145367651-6303b46e4040?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2006&q=100",
     title: "活动空间",
     subtitle: "公园 广场",
     category:
