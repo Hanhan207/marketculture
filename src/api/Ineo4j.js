@@ -29,12 +29,11 @@ function getCenter(input) {
     });
 }
 
-
 //获取人和某类地点关系数据
 function getManSomePlace(place) {
   var session = driver.session();
-  var nodes = []
-  var edges = []
+  var nodes = [];
+  var edges = [];
   var myData = [];
   return session
     .run(`MATCH (m:man)-[r]->(n:${place}) RETURN m, r, n`, {})
@@ -46,15 +45,14 @@ function getManSomePlace(place) {
           properties: record.get("r").properties,
         });
         nodes.push({
-          id:record.get("m").identity.low+ "",
-          labels:record.get("m").labels[0],
-          properties:record.get("m").properties
-        }
-          );
+          id: record.get("m").identity.low + "",
+          labels: record.get("m").labels[0],
+          properties: record.get("m").properties,
+        });
         nodes.push({
-          id:record.get("n").identity.low+ "",
-          labels:record.get("n").labels[0],
-          properties:record.get("n").properties
+          id: record.get("n").identity.low + "",
+          labels: record.get("n").labels[0],
+          properties: record.get("n").properties,
         });
       });
     })
@@ -193,14 +191,13 @@ function getPerson() {
 }
 
 //查询整个数据库
-function getAll(){
+function getAll() {
   var session = driver.session();
   var nodes = [];
   var edges = [];
   return session
     .run("MATCH (m)-[r]-(n) RETURN m,r,n")
     .then((result) => {
-      
       result.records.forEach((record) => {
         edges.push({
           source: record.get("r").start.low + "",
@@ -208,15 +205,14 @@ function getAll(){
           properties: record.get("r").properties,
         });
         nodes.push({
-          id:record.get("m").identity.low+ "",
-          labels:record.get("m").labels[0],
-          properties:record.get("m").properties
-        }
-          );
+          id: record.get("m").identity.low + "",
+          labels: record.get("m").labels[0],
+          properties: record.get("m").properties,
+        });
         nodes.push({
-          id:record.get("n").identity.low+ "",
-          labels:record.get("n").labels[0],
-          properties:record.get("n").properties
+          id: record.get("n").identity.low + "",
+          labels: record.get("n").labels[0],
+          properties: record.get("n").properties,
         });
       });
     })
@@ -231,7 +227,7 @@ function getAll(){
 }
 
 //查询所有人物关系
-function getMan(){
+function getMan() {
   var session = driver.session();
   var nodes = [];
   var edges = [];
@@ -245,15 +241,14 @@ function getMan(){
           properties: record.get("r").properties,
         });
         nodes.push({
-          id:record.get("m").identity.low+ "",
-          labels:record.get("m").labels[0],
-          properties:record.get("m").properties
-        }
-          );
+          id: record.get("m").identity.low + "",
+          labels: record.get("m").labels[0],
+          properties: record.get("m").properties,
+        });
         nodes.push({
-          id:record.get("n").identity.low+ "",
-          labels:record.get("n").labels[0],
-          properties:record.get("n").properties
+          id: record.get("n").identity.low + "",
+          labels: record.get("n").labels[0],
+          properties: record.get("n").properties,
         });
       });
     })
@@ -270,9 +265,7 @@ function getMan(){
 //去重数据-All
 function quchongAll(arr) {
   const res = new Map();
-  return arr.filter(
-    (a) => !res.has(a.id) && res.set(a.id, 1)
-  );
+  return arr.filter((a) => !res.has(a.id) && res.set(a.id, 1));
 }
 
 //去重数据
@@ -284,65 +277,62 @@ function quchong(arr) {
 }
 
 //查询基础信息
-function getInfo(type){
+function getInfo(type) {
   var session = driver.session();
-  var myData={
-    type:type,
-    data:[]
-  }
+  var myData = {
+    type: type,
+    data: [],
+  };
   var nodes = [];
   var edges = [];
-  if(type === 'man'){
+  if (type === "man") {
     return session
-    .run("MATCH (m:man)-[r]-(n:man) RETURN m,r,n")
-    .then((result) => {
-      result.records.forEach((record) => {
-        edges.push({
-          source: record.get("r").start.low + "",
-          target: record.get("r").end.low + "",
-          properties: record.get("r").properties,
+      .run("MATCH (m:man)-[r]-(n:man) RETURN m,r,n")
+      .then((result) => {
+        result.records.forEach((record) => {
+          edges.push({
+            source: record.get("r").start.low + "",
+            target: record.get("r").end.low + "",
+            properties: record.get("r").properties,
+          });
+          nodes.push({
+            id: record.get("m").identity.low + "",
+            labels: record.get("m").labels[0],
+            properties: record.get("m").properties,
+          });
+          nodes.push({
+            id: record.get("n").identity.low + "",
+            labels: record.get("n").labels[0],
+            properties: record.get("n").properties,
+          });
         });
-        nodes.push({
-          id:record.get("m").identity.low+ "",
-          labels:record.get("m").labels[0],
-          properties:record.get("m").properties
-        }
-          );
-        nodes.push({
-          id:record.get("n").identity.low+ "",
-          labels:record.get("n").labels[0],
-          properties:record.get("n").properties
-        });
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .then(() => {
+        session.close();
+        let myData = { nodes: quchongAll(nodes), edges: edges };
+        return myData;
       });
-    })
-    .catch((error) => {
-      console.log(error);
-    })
-    .then(() => {
-      session.close();
-      let myData = { nodes: quchongAll(nodes), edges: edges };
-      return myData;
-    });
-  }else{
+  } else {
     return session
-    .run(`MATCH (m:${type}) RETURN m`)
-    .then((result) => {
-      result.records.forEach((record) => {
-        myData.data.push(record.get("m"));
+      .run(`MATCH (m:${type}) RETURN m`)
+      .then((result) => {
+        result.records.forEach((record) => {
+          myData.data.push(record.get("m"));
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .then(() => {
+        session.close();
+        // let myData = { nodes: quchongAll(nodes), edges: edges };
+        return myData;
       });
-    })
-    .catch((error) => {
-      console.log(error);
-    })
-    .then(() => {
-      session.close();
-      // let myData = { nodes: quchongAll(nodes), edges: edges };
-      return myData;
-    });
   }
-  
 }
-
 
 export {
   getCenter,
@@ -354,5 +344,5 @@ export {
   getAll,
   getInfo,
   getMan,
-  getManSomePlace
+  getManSomePlace,
 };

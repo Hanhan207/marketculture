@@ -87,25 +87,27 @@ export default function Gallery({ src, index, columnOffset }) {
   const ref = useRef(null);
 
   useEffect(() => {
-    // This does not seem to work without a settimeout
-    setTimeout(() => {
-      let sections = gsap.utils.toArray(".gallery-item-wrapper");
-
-      gsap.to(sections, {
-        xPercent: -100 * (sections.length - 1),
-        ease: "none",
-        scrollTrigger: {
-          start: "top top",
-          trigger: ref.current,
-          scroller: "#main-container",
-          pin: true,
-          scrub: 0.5,
-          snap: 1 / (sections.length - 1),
-          end: () => `+=${ref.current.offsetWidth}`,
-        },
+    if (ref.current != null) {
+      console.log("Ref", ref.current.offsetWidth);
+      var offwidth = ref.current.offsetWidth;
+      setTimeout(() => {
+        let sections = gsap.utils.toArray(".gallery-item-wrapper");
+        gsap.to(sections, {
+          xPercent: -100 * (sections.length - 1),
+          ease: "none",
+          scrollTrigger: {
+            start: "top top",
+            trigger: ref.current,
+            scroller: "#main-container",
+            pin: true,
+            scrub: 0.5,
+            snap: 1 / (sections.length - 1),
+            end: () => `+=${offwidth}`,
+          },
+        });
+        ScrollTrigger.refresh();
       });
-      ScrollTrigger.refresh();
-    });
+    }
   }, []);
 
   const handleUpdateActiveImage = (index) => {
@@ -122,7 +124,7 @@ export default function Gallery({ src, index, columnOffset }) {
         </div>
         {images.map((image, index) => (
           <GalleryItem
-            key={src}
+            key={index}
             index={index}
             {...image}
             updateActiveImage={handleUpdateActiveImage}

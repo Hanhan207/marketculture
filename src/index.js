@@ -174,9 +174,10 @@ function SiderLayout() {
 }
 
 ReactDOM.render(
+  // <Playground />,
   <Router>
-    {/* <Link to="index">to index</Link>
-    <Link to="landpage">to landpage</Link> */}
+    <Link to="home">to home</Link>
+    <Link to="/">to SiderLayout</Link>
     <Routes>
       <Route path="/home" element={<Playground />} />
       <Route path="/" element={<SiderLayout />} />
