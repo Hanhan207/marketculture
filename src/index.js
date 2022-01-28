@@ -176,6 +176,7 @@ function SiderLayout() {
 ReactDOM.render(
   // <Playground />,
   <Router>
+    <p>版本：V1.1 无安全策略，修改字体链接</p>
     <Link to="home">to home</Link>
     <Link to="/">to SiderLayout</Link>
     <Routes>
