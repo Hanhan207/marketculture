@@ -11,6 +11,7 @@ import {
 
 import toDataURL from "../../api/toimg";
 const { DragCanvas, ZoomCanvas, DragNode, ActivateRelations } = Behaviors;
+const buttonText = "选择图表";
 
 function CardContent(e) {
   var type = e.type;
@@ -18,20 +19,31 @@ function CardContent(e) {
   var chartdata = e.data;
   useEffect(() => {}, []);
 
+  function getImg(img) {
+    e.getImg(img);
+  }
   return (
     <div id="nodeBox">
       {/* <button onClick={() => toimg()}>生产图片</button> */}
-      {type === "人物关系图" && <NodeMap data={chartdata} index={index} />}
-      {type === "人物-胡同关系图" && <NodeMap data={chartdata} index={index} />}
-      {type === "人物-老字号关系图" && (
-        <NodeMap data={chartdata} index={index} />
+      {type === "人物关系图" && (
+        <NodeMap getImg={getImg} data={chartdata} index={index} />
       )}
-      {type === "人物-剧院关系图" && <NodeMap data={chartdata} index={index} />}
-      {type === "胡同分布图" && <East index={index} />}
-      {type === "老字号分布图" && <East index={index} />}
-      {type === "地标类型" && <DbType />}
-      {type === "老字号数值图" && <ThbScatter data={chartdata} />}
-      {type === "剧院年份图" && <OpInfo data={chartdata} />}
+      {type === "人物-胡同关系图" && (
+        <NodeMap getImg={getImg} data={chartdata} index={index} />
+      )}
+      {type === "人物-老字号关系图" && (
+        <NodeMap getImg={getImg} data={chartdata} index={index} />
+      )}
+      {type === "人物-剧院关系图" && (
+        <NodeMap getImg={getImg} data={chartdata} index={index} />
+      )}
+      {type === "胡同分布图" && <East getImg={getImg} index={index} />}
+      {type === "老字号分布图" && <East getImg={getImg} index={index} />}
+      {type === "地标类型" && <DbType getImg={getImg} />}
+      {type === "老字号数值图" && (
+        <ThbScatter getImg={getImg} data={chartdata} />
+      )}
+      {type === "剧院年份图" && <OpInfo getImg={getImg} data={chartdata} />}
       {/* <pre>{JSON.stringify(chartdata, null, 2)}</pre> */}
       {/* */}
     </div>
@@ -42,11 +54,15 @@ function CardContent(e) {
 function NodeMap(e) {
   var data = e.data;
   var index = e.index;
+  const ref = useRef();
+
   const [node, setnode] = useState([]);
   const [chart, setChart] = useState(null);
-  const [dataURL, setDataURL] = useState(null);
   useEffect(() => {
     setnode({ nodes: setnodes(data.nodes), edges: setedges(data.edges) });
+    console.log(ref.current.graph.cfg);
+    setChart(ref.current.graph.cfg);
+    // setChart(ref.current.)
   }, []);
 
   //设置点样式
@@ -86,14 +102,32 @@ function NodeMap(e) {
     });
     return edges;
   }
+
+  function toimg() {
+    // toDataURL(chart);
+    // setDataURL(toDataURL(chart));
+    e.getImg(toDataURL(chart, true));
+    console.log("done");
+  }
   return (
-    <Graphin data={node} style={{ width: "480px" }} layout={{ type: "gForce" }}>
-      <ActivateRelations />
-    </Graphin>
+    <div className="nodemap-container">
+      <button className="button-chart" onClick={() => toimg()}>
+        {buttonText}{" "}
+      </button>
+      <Graphin
+        ref={ref}
+        data={node}
+        style={{ width: "500px" }}
+        layout={{ type: "gForce" }}
+      >
+        <ActivateRelations />
+      </Graphin>
+    </div>
   );
 }
 //东西城分布图
 function East(e) {
+  const [chart, setChart] = useState(null);
   useEffect(() => {
     const piePlot = new Pie(`pie_${e.index}`, {
       appendPadding: 10,
@@ -113,6 +147,7 @@ function East(e) {
       interactions: [{ type: "element-active" }],
     });
     piePlot.render();
+    setChart(piePlot.chart);
   }, []);
 
   const data = [
@@ -123,12 +158,25 @@ function East(e) {
     { type: "分类五", value: 10 },
     { type: "其他", value: 5 },
   ];
-
-  return <div id={"pie_" + e.index}></div>;
+  function toimg() {
+    // toDataURL(chart);
+    // setDataURL(toDataURL(chart));
+    e.getImg(toDataURL(chart));
+    console.log("done");
+  }
+  return (
+    <div>
+      <button className="button-chart" onClick={() => toimg()}>
+        {buttonText}{" "}
+      </button>
+      <div id={"pie_" + e.index}></div>
+    </div>
+  );
 }
 
 //地标类型图
-function DbType() {
+function DbType(e) {
+  const [chart, setChart] = useState(null);
   const db_data = [
     {
       type: "来往路线型",
@@ -186,14 +234,29 @@ function DbType() {
     });
 
     columnPlot.render();
+    setChart(columnPlot.chart);
   }, []);
 
-  return <div id="db_type"></div>;
+  function toimg() {
+    e.getImg(toDataURL(chart));
+    console.log("done");
+  }
+
+  return (
+    <div>
+      <button className="button-chart" onClick={() => toimg()}>
+        {buttonText}{" "}
+      </button>
+      <div id="db_type"></div>
+    </div>
+  );
 }
 
 //老字号气泡散点图
 function ThbScatter(params) {
+  const [chart, setChart] = useState(null);
   var mydata = params.data.data;
+
   var thbdata = [];
   mydata.forEach((item) => {
     thbdata.push({
@@ -215,9 +278,24 @@ function ThbScatter(params) {
       shape: "circle",
     });
     scatterPlot.render();
+    setChart(scatterPlot.chart);
   }, []);
 
-  return <div id="thbscatter"></div>;
+  function toimg() {
+    // toDataURL(chart);
+    // setDataURL(toDataURL(chart));
+    params.getImg(toDataURL(chart));
+    console.log("done");
+  }
+
+  return (
+    <div>
+      <button className="button-chart" onClick={() => toimg()}>
+        {buttonText}{" "}
+      </button>
+      <div id="thbscatter"></div>
+    </div>
+  );
 }
 
 //剧院分组柱形图
@@ -225,7 +303,8 @@ function OpInfo(params) {
   var mydata = params.data.data;
   var opdata = [];
   const [chart, setChart] = useState(null);
-  const [dataURL, setDataURL] = useState(null);
+  const ref = useRef();
+  console.log("params", params);
   mydata.forEach((item) => {
     opdata.push({
       title: item.properties.op_name,
@@ -262,19 +341,25 @@ function OpInfo(params) {
     });
 
     stackedColumnPlot.render();
+    console.log("Chart", stackedColumnPlot);
+    console.log("Plot", ref);
     setChart(stackedColumnPlot.chart);
   }, []);
 
   function toimg() {
-    toDataURL(chart);
-    setDataURL(toDataURL(chart));
-    console.log("hello");
+    // toDataURL(chart);
+    // setDataURL(toDataURL(chart));
+    params.getImg(toDataURL(chart));
+    console.log("done");
   }
+
   return (
     <div>
-      <button onClick={() => setDataURL(toDataURL(chart))}>hell </button>
-      <div id="opinfo"></div>
-      <img src={dataURL} alt="" />
+      {/* <button onClick={() => setDataURL(toDataURL(chart))}>hell </button> */}
+      <button className="button-chart" onClick={() => toimg()}>
+        {buttonText}{" "}
+      </button>
+      <div id="opinfo" ref={ref}></div>
     </div>
   );
 }

@@ -3,11 +3,18 @@
  * @param chart 需要获取 DataURL 的 chart 实例
  * @returns 返回图表的 dataURL
  */
-export default function toDataURL(chart) {
-  console.log("chart", chart);
-  const canvas = chart.getCanvas();
+export default function toDataURL(chart, isNode) {
+  // console.log("chart", chart);
+  var canvas;
+  if (isNode) {
+    canvas = chart.canvas;
+  } else {
+    canvas = chart.getCanvas();
+  }
+  console.log("canvas", canvas);
   const renderer = chart.renderer;
   const canvasDom = canvas.get("el");
+  console.log("canvasDom", canvasDom);
   let dataURL = "";
   if (renderer === "svg") {
     const clone = canvasDom.cloneNode(true);
@@ -27,7 +34,7 @@ export default function toDataURL(chart) {
   } else if (renderer === "canvas") {
     dataURL = canvasDom.toDataURL("image/png");
   }
-  console.log("dataURL", dataURL);
+  // console.log("dataURL", dataURL);
   return dataURL;
 }
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./charts.css";
-import { Pie } from "@antv/g2plot";
+import { P, Pie } from "@antv/g2plot";
 import {
   getInfo as IgetInfo,
   getMan as IgetPerson,
@@ -9,10 +9,11 @@ import {
 
 import CardContent from "./ChartCard";
 
-import { Steps, Button, message } from "antd";
+import { Steps, Button, message, Input } from "antd";
 import { Checkbox, Row, Col, Card, List } from "antd";
 
 const { Step } = Steps;
+const { TextArea } = Input;
 const steps = [
   {
     title: "选择数据源",
@@ -61,6 +62,9 @@ var Infos = [];
 
 var mychecklist = [];
 
+var posterInsight = "";
+var posterImg = "";
+
 function setContent(e) {
   switch (e) {
     case 0:
@@ -70,7 +74,7 @@ function setContent(e) {
       return <StepTwo />;
       break;
     case 2:
-      return "2";
+      return <StepThree />;
       break;
     default:
       return "3";
@@ -161,8 +165,11 @@ function StepOne() {
   );
 }
 
+//选图表、写洞察
 function StepTwo() {
   var chartdata = [];
+  const [insight, setInsight] = useState("");
+  const [img, setimg] = useState("");
   for (var i = 0; i < Infos.length; i++) {
     switch (Infos[i].title) {
       case "man":
@@ -221,27 +228,52 @@ function StepTwo() {
         break;
     }
   }
+
+  const onChange = (e) => {
+    // setInsight(e.target.value);
+    posterInsight = e.target.value;
+  };
+
+  function getImg(e) {
+    // console.log("ChartPage:", e);
+    posterImg = e;
+  }
   return (
-    <List
-      className="ChartList"
-      grid={{
-        gutter: 16,
-        xs: 1,
-        sm: 2,
-        md: 4,
-        lg: 4,
-        xl: 6,
-        xxl: 3,
-      }}
-      dataSource={chartdata}
-      renderItem={(item, index) => (
-        <List.Item>
-          <Card title={item.title}>
-            <CardContent data={item.data} index={index} type={item.title} />
-          </Card>
-        </List.Item>
-      )}
-    />
+    <div className="chartList-container">
+      <div className="insight-container">
+        <h3 style={{ textAlign: "left" }}>记录洞察：</h3>
+        <TextArea
+          className="insight-text"
+          showCount
+          maxLenght={100}
+          onChange={onChange}
+        />
+      </div>
+      <div className="card-container">
+        {chartdata.map((item, index) => (
+          <div className="card-chart">
+            <h2>{item.title}</h2>
+            <CardContent
+              getImg={getImg}
+              data={item.data}
+              index={index}
+              type={item.title}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+//设置海报
+function StepThree() {
+  return (
+    <div className="poster-container">
+      <img className="poster-img-container" src={posterImg} alt="" />
+      <h4 className="poster-insight-container">{posterInsight}</h4>
+      {/* {posterImg === "" ? <img src={posterImg} alt="" /> : <P>请先选择图片</P>} */}
+    </div>
   );
 }
 
