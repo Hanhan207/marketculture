@@ -60,7 +60,7 @@ function Header() {
         <li>人物关系</li>
         <li>数据统计</li>
       </ul> */}
-      <FiberEl />
+      {/* <FiberEl /> */}
       <p className="header-menu" data-scroll data-scroll-speed={1.5}>
         市井一词，原指街市或市场，即城邑中集中买卖货物的场所。“市井”在宋代之前多是由市场围墙围合成的商业区域，并在空间中施以“井”制，以限定其空间范围，起到与“坊”相隔离的作用，以便于监管。唐末宋初，市井外围高墙自发的逐步瓦解，商业逐渐向临街店面的形式转变，与居住空间的联系日益紧密，所形成的商业和居住空间的这种混合方式对商户经营、居民生活更加便利。北宋时期开封(东京)的市井，经过由前朝(唐代)“仿里”向“街坊”的转变后，得到了飞速发展。
       </p>
@@ -76,14 +76,11 @@ function Featured() {
         <h6>
           可以通过选择感兴趣的主题，查看相关主题下的可视分析图表并写下自己的洞察或评价，并经过分析平台再设计后生成可分享的海报，快来试一试吧！
         </h6>
-        <img src="https://picsum.photos/600/300" alt="" data-scroll />
+        <img src={require("../../img/node.jpg").default} alt="" data-scroll />
       </div>
       <div className="feature-column-layout">
-        <h6>
-          {" "}
-          <NavLink to="/">{"快来试一试吧——>"}</NavLink>
-        </h6>
-        <img src="https://picsum.photos/800/500" data-scroll alt="" />
+        <h6>知识全景</h6>
+        <img src={require("../../img/map.jpg").default} data-scroll alt="" />
       </div>
     </section>
   );
@@ -123,7 +120,7 @@ function About() {
         className="about-section-img"
         data-scroll
         data-scroll-speed={2}
-        src={require("../../img/hutong.jpg").default}
+        src={require("../../img/realtion.jpg").default}
         alt=""
       />
     </section>
@@ -159,13 +156,13 @@ function Footer() {
   }, [reveal]);
   return (
     <section className={"footer"} data-scroll-section>
-      <SectionHeader title={"来吧来吧"} />
+      {/* <SectionHeader title={"欢迎使用"} /> */}
       <h1
         className={cn("location", { "is-reveal": reveal })}
         id="location-text"
         ref={ref}
       >
-        <NavLink to="/">{"进入系统 一探究竟"}</NavLink>
+        <NavLink to="/system">{"进入系统 一探究竟"}</NavLink>
       </h1>
     </section>
   );
@@ -232,9 +229,9 @@ function Playground() {
           data-scroll-container
         >
           <div className="navbar" data-scroll-section>
-            <div>菜单</div>
+            <div>-----------------</div>
             <div>古都图谱</div>
-            <div>关于</div>
+            <div>hanyuxin@bupt.edu</div>
           </div>
           <Header />
           <Gallery />

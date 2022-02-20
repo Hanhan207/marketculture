@@ -10,6 +10,7 @@ import SpaceMap from "./components/SpaceMap";
 import ChartPage from "./components/ChartPage/ChartPage";
 import Contact from "./components/Contact";
 import FiberEl from "./components/FiberEl/FiberEl";
+import Pappers from "./components/pappers";
 
 //antd 组件库
 import { Button, Divider, message, Card, Image, Tabs } from "antd";
@@ -47,7 +48,7 @@ function SiderLayout() {
             <Image width={30} src={logo} style={{ marginLeft: 18 }} />
           ) : (
             <Link
-              to="home"
+              to="/"
               style={{ width: "180", textAlign: "center", fontSize: "16px" }}
             >
               市井文化可视分析系统
@@ -82,10 +83,21 @@ function SiderLayout() {
           >
             数据统计
           </Menu.Item>
-          <SubMenu key="sub2" icon={<BookOutlined />} title="相关文献">
-            <Menu.Item key="6">古都文化</Menu.Item>
-            <Menu.Item key="7">可视分析</Menu.Item>
-          </SubMenu>
+          <Menu.Item
+            key="6"
+            icon={<BookOutlined />}
+            onClick={() => setContent(6)}
+          >
+            相关文献
+          </Menu.Item>
+          {/* <SubMenu key="sub2" icon={<BookOutlined />} title="相关文献">
+            <Menu.Item key="6" onClick={() => setContent(6)}>
+              古都文化
+            </Menu.Item>
+            <Menu.Item key="7" onClick={() => setContent(7)}>
+              可视分析
+            </Menu.Item>
+          </SubMenu> */}
           <Menu.Item
             key="8"
             icon={<WhatsAppOutlined />}
@@ -154,6 +166,18 @@ function SiderLayout() {
             </div>
           </Content>
         )}
+        {content === 6 && (
+          <Content style={{ margin: "0 16px" }}>
+            <div
+              className="site-layout-background"
+              style={{ padding: 24, minHeight: 360 }}
+            >
+              {/* <Contact /> */}
+              <Pappers />
+            </div>
+          </Content>
+        )}
+
         {content === 8 && (
           <Content style={{ margin: "0 16px" }}>
             <div
@@ -175,13 +199,14 @@ function SiderLayout() {
 
 ReactDOM.render(
   // <Playground />,
+  // <FiberEl />,
   <Router>
-    <p>版本：V1.1 无安全策略，修改字体链接</p>
+    {/* <p>版本：V1.1 无安全策略，修改字体链接</p>
     <Link to="home">to home</Link>
-    <Link to="/">to SiderLayout</Link>
+    <Link to="/">to SiderLayout</Link> */}
     <Routes>
-      <Route path="/home" element={<Playground />} />
-      <Route path="/" element={<SiderLayout />} />
+      <Route path="/system" element={<SiderLayout />} />
+      <Route path="/" element={<Playground />} />
     </Routes>
   </Router>,
   document.querySelector("#root")

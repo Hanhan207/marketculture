@@ -3,9 +3,8 @@ import neo4j from "neo4j-driver";
 
 //初始化Neo4j数据库
 var driver = neo4j.driver(
-  // "neo4j://localhost:7687",
   "neo4j://152.136.131.13:7687",
-  // "neo4j://hanhan.run:7686",
+  // "neo4j://152.1"
   neo4j.auth.basic("neo4j", "sjwh")
 );
 
