@@ -9,7 +9,7 @@ import {
 
 import CardContent from "./ChartCard";
 
-import { Steps, Button, message, Input } from "antd";
+import { Steps, Button, message, Input, Radio, Space } from "antd";
 import { Checkbox, Row, Col, Card, List } from "antd";
 
 const { Step } = Steps;
@@ -269,10 +269,22 @@ function StepTwo() {
 //设置海报
 function StepThree() {
   return (
-    <div className="poster-container">
-      <img className="poster-img-container" src={posterImg} alt="" />
-      <h4 className="poster-insight-container">{posterInsight}</h4>
-      {/* {posterImg === "" ? <img src={posterImg} alt="" /> : <P>请先选择图片</P>} */}
+    <div className="poster-page">
+      <div className="poster-container">
+        <img className="poster-img-container" src={posterImg} alt="" />
+        <h4 className="poster-insight-container">{posterInsight}</h4>
+        {/* {posterImg === "" ? <img src={posterImg} alt="" /> : <P>请先选择图片</P>} */}
+      </div>
+      <div className="bar-container">
+        <Radio.Group>
+          <Space direction="vertical">
+            <Radio value={1}>黄色</Radio>
+            <Radio value={2}>红色</Radio>
+            <Radio value={3}>绿色</Radio>
+            <Radio value={4}>蓝色</Radio>
+          </Space>
+        </Radio.Group>
+      </div>
     </div>
   );
 }

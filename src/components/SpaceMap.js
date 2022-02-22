@@ -150,7 +150,7 @@ function SpaceMap() {
           center={center}
           mapStyle={mapStyle}
           zoom="12"
-          pitch="35"
+          pitch="50"
         >
           <ControlBar position={{ top: "10px", left: "10px" }} position="RT" />
 

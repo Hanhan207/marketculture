@@ -278,7 +278,9 @@ function LinkMap() {
           </Option>
         ))}
       </Select>
-      <button onClick={() => avatar()}>set</button>
+      <Button style={{ marginLeft: "20px" }} onClick={() => avatar()}>
+        查看连接
+      </Button>
       <div id="mapBox" ref={refmap}></div>
     </div>
   );
