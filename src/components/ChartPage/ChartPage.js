@@ -11,6 +11,7 @@ import CardContent from "./ChartCard";
 
 import { Steps, Button, message, Input, Radio, Space } from "antd";
 import { Checkbox, Row, Col, Card, List } from "antd";
+import { CustomCard } from "@tsamantanis/react-glassmorphism";
 
 const { Step } = Steps;
 const { TextArea } = Input;
@@ -168,6 +169,8 @@ function StepOne() {
 //选图表、写洞察
 function StepTwo() {
   var chartdata = [];
+  var defaultText =
+    "市井文化是主要由市井之民创造并体现他们的生产活动､生活方式､行为习俗､宗教信仰､伦理观念､审美情趣､价值取向等特征的文化。[4]目前，针对市井文化的理论性学术研究较少，通过知网对主题为市井文化的期刊论文进行检索，排除来源于报纸的文章，共得到255篇论文，其中文学及文学评论类相关论文110篇､建筑设计与城市规划历史街区方面相关论文73篇，地区历史与民俗发展类相关论文29篇，曲艺､绘画评论类相关论文29篇，其他类论文17篇。";
   const [insight, setInsight] = useState("");
   const [img, setimg] = useState("");
   for (var i = 0; i < Infos.length; i++) {
@@ -247,6 +250,7 @@ function StepTwo() {
           showCount
           maxLenght={100}
           onChange={onChange}
+          defaultValue={defaultText}
         />
       </div>
       <div className="card-container">
@@ -268,29 +272,89 @@ function StepTwo() {
 
 //设置海报
 function StepThree() {
+  const [posterColor, setposterColor] = useState("");
+  const [mySize, setMySize] = useState("28px");
+  const [bgImg, setBgImg] = useState("f1");
+
   return (
     <div className="poster-page">
-      <div className="poster-container">
-        <img className="poster-img-container" src={posterImg} alt="" />
-        <h4 className="poster-insight-container">{posterInsight}</h4>
+      <div
+        className="poster-container"
+        style={{
+          borderColor: posterColor,
+          backgroundImage:
+            "url(" + require(`../../img/${bgImg}.png`).default + ")",
+          backgroundSize: "100% 100%",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
+        <img
+          className="poster-img-container"
+          src={posterImg}
+          alt=""
+          style={{ borderColor: posterColor }}
+        />
+        <CustomCard
+          effectColor={"#fff"} // required
+          // color="#14AEFF" // default color is white
+          color={posterColor}
+          blur={3} // default blur value is 10px
+          borderRadius={0} // default border radius value is 10px
+        >
+          <p
+            style={{
+              fontSize: mySize,
+              color: "black",
+              textAlign: "left",
+            }}
+          >
+            {posterInsight}
+          </p>
+          {/* <p>This is an example</p> */}
+        </CustomCard>
+        {/* //<h4 className="poster-insight-container"></h4> */}
         {/* {posterImg === "" ? <img src={posterImg} alt="" /> : <P>请先选择图片</P>} */}
       </div>
       <div className="bar-container">
-        <Radio.Group>
-          <Space direction="vertical">
-            <Radio value={1}>黄色</Radio>
-            <Radio value={2}>红色</Radio>
-            <Radio value={3}>绿色</Radio>
-            <Radio value={4}>蓝色</Radio>
-          </Space>
-        </Radio.Group>
+        <div>
+          <h1>边框设置</h1>
+          <Radio.Group onChange={(e) => setposterColor(e.target.value)}>
+            <Space direction="vertical">
+              <Radio value={"#E7CA5E"}>黄色</Radio>
+              <Radio value={"#B93F39"}>红色</Radio>
+              <Radio value={"#6EDA53"}>绿色</Radio>
+              <Radio value={"#48539F"}>蓝色</Radio>
+            </Space>
+          </Radio.Group>
+        </div>
+        <div>
+          <h1>背景设置</h1>
+          <Radio.Group onChange={(e) => setBgImg(e.target.value)}>
+            <Space direction="vertical">
+              <Radio value={"f1"}>人</Radio>
+              <Radio value={"f2"}>树</Radio>
+              <Radio value={"f3"}>鸟</Radio>
+              <Radio value={"f4"}>花</Radio>
+            </Space>
+          </Radio.Group>
+        </div>
+        <div>
+          <h1>字号设置</h1>
+          <Radio.Group onChange={(e) => setMySize(e.target.value)}>
+            <Space direction="vertical">
+              <Radio value={"18px"}>小</Radio>
+              <Radio value={"28px"}>中</Radio>
+              <Radio value={"36px"}>大</Radio>
+            </Space>
+          </Radio.Group>
+        </div>
       </div>
     </div>
   );
 }
 
 function ChartPage() {
-  const [current, setcurrent] = useState(0);
+  const [current, setcurrent] = useState(2);
   const next = () => {
     setcurrent(current + 1);
   };

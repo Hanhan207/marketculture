@@ -35,7 +35,7 @@
 }
 
 .check {
-  border: 2px solid blue;
+  border: 2px solid #d53f41;
 }
 
 .chartList-container {
@@ -62,7 +62,7 @@
   height: 620px;
   margin-right: 20px;
   padding: 10px;
-  border: 2px solid blue;
+  border: 2px solid #d53f41;
   /* background-color: blue; */
   display: flex;
   flex-direction: column;
@@ -71,7 +71,10 @@
 
 /* 选择图表按钮 */
 .button-chart {
-  width: 80%;
+  background-color: white;
+  border: 1.5px solid #d53f41;
+  border-radius: 5px;
+  width: 30%;
   height: 30px;
   margin: 5px;
 }
@@ -83,21 +86,39 @@
 }
 
 .poster-container {
-  border: 2px solid blue;
+  width: 80vw;
+  border: 2px solid #d53f41;
   display: flex;
   flex-direction: row;
   align-items: center;
   padding: 20px;
+  border-radius: 2vw;
 }
 .poster-insight-container {
   padding: 30px;
   font-size: 32px;
 }
 .poster-img-container {
-  border: 2px solid red;
+  border: 1px solid #d53f41;
+  background-color: #fff;
+  padding: 20px;
+  margin-right: 20px;
+  border-radius: 1vw;
 }
 
 .poster-page {
   display: flex;
   flex-direction: column;
+  align-items: center;
+}
+.bar-container {
+  width: 80vw;
+  padding: 20px;
+  margin-top: 20px;
+  border-top: #d53f41 2px solid;
+  /* border-style: dashed; */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
 }
