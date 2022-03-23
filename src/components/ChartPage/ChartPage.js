@@ -354,7 +354,7 @@ function StepThree() {
 }
 
 function ChartPage() {
-  const [current, setcurrent] = useState(2);
+  const [current, setcurrent] = useState(0);
   const next = () => {
     setcurrent(current + 1);
   };

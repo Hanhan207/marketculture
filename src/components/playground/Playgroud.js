@@ -229,8 +229,8 @@ function Playground() {
           data-scroll-container
         >
           <div className="navbar" data-scroll-section>
-            <div>-----------------</div>
-            <div>古都图谱</div>
+            <NavLink to="/system">{"进入分析后台"}</NavLink>
+            <div>- 古都图谱 -</div>
             <div>hanyuxin@bupt.edu</div>
           </div>
           <Header />
