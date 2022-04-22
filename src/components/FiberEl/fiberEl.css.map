@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,iBAAiB,CAAA;EACb,QAAQ,EAAE,QAAQ;EAClB,GAAG,EAAE,IAAI;EACT,KAAK,EAAE,GAAG;EACV,OAAO,EAAE,CAAC;EACV,KAAK,EAAE,IAAI;EACX,OAAO,EAAE,IAAI;CAEd",
+    "sources": [
+        "fiberEl.scss"
+    ],
+    "names": [],
+    "file": "fiberEl.css"
+}

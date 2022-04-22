@@ -164,6 +164,10 @@ function Footer() {
       >
         <NavLink to="/system">{"进入系统 一探究竟"}</NavLink>
       </h1>
+
+      <a href="https://beian.miit.gov.cn/" style={{ color: "gray" }}>
+        京ICP备2021040068号-1
+      </a>
     </section>
   );
 }
